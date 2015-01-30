@@ -29,7 +29,9 @@
   },
   "homepage": "https://github.com/tmpvar/ray-aabb",
   "devDependencies": {
+    "benchmark": "^1.0.0",
     "gl-vec3": "^1.0.2",
+    "microtime": "^1.2.0",
     "tape": "^3.4.0"
   },
   "dependencies": {}

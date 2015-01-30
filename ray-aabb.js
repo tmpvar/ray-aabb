@@ -1,63 +1,35 @@
-module.exports = intersectRayAABB;
+module.exports = isect;
 
-var sign = [0, 0, 0];
+function isect(ro, rd, ird, b, near, far) {
+  var l, m, n, o, p, q, sx, sy, sz, i0 = ird[0], i1 = ird[1], i2 = ird[2], r0 = ro[0], r1 = ro[1], r2 = ro[2];
 
-function intersectRayAABB(origin, direction, inv_direction, box, near, far) {
-  var tmin, tmax, tymin, tymax, tzmin, tzmax;
+  sx = i0<0?1:0;
+  sy = i1<0?1:0;
+  sz = i2<0?1:0;
 
-  sign[0] = inv_direction[0] < 0 ? 1 : 0;
-  sign[1] = inv_direction[1] < 0 ? 1 : 0;
-  sign[2] = inv_direction[2] < 0 ? 1 : 0;
+  l = b[sx][0] - r0;
+  l = !l?0:l*i0;
+  m = b[1-sx][0] - r0;
+  m = !m?0:m*i0;
+  n = b[sy][1] - r1;
+  n = !n?0:n*i1;
+  o = b[1-sy][1] - r1;
+  o = !o?0:o*i1;
 
-  var a = box[sign[0]][0] - origin[0];
-  var b = box[1-sign[0]][0] - origin[0];
-  var c = box[sign[1]][1] - origin[1];
-  var d = box[1-sign[1]][1] - origin[1];
+  if (l > o || n > m) return false;
 
-  tmin = a * inv_direction[0];
-  tmax = b * inv_direction[0];
-  tymin = c * inv_direction[1];
-  tymax = d * inv_direction[1];
+  l = n>l?n:l;
+  m = o<m?o:m;
 
-  if (isNaN(tmin)) {
-    tmin = a;
-  }
-  if (isNaN(tmax)) {
-    tmax = b;
-  }
-  if (isNaN(tymin)) {
-    tymin = c;
-  }
-  if (isNaN(tymax)) {
-    tymax = d;
-  }
+  p = b[sz][2] - r2;
+  p = !p?0:p*i2;
+  q = b[1-sz][2] - r2;
+  q = !q?0:q*i2;
 
-  if (tmin > tymax || tymin > tmax) {
-    return false;
-  }
+  if (l > q || p > m) return false;
 
-  if (tymin > tmin) {
-    tmin = tymin;
-  }
+  l = p>l?p:l;
+  m = q<m?q:m;
 
-  if (tymax < tmax) {
-    tmax = tymax;
-  }
-
-  tzmin = (box[sign[2]][2] - origin[2]) * inv_direction[2];
-  tzmax = (box[1-sign[2]][2] - origin[2]) * inv_direction[2];
-
-  if (tmin > tzmax || tzmin > tmax) {
-    return false;
-  }
-
-  if (tzmin > tmin) {
-    tmin = tzmin;
-  }
-
-  if (tzmax < tmax) {
-    tmax = tzmax;
-  }
-
-  return (tmin < far && tmax > near);
+  return l < far && m > near;
 }

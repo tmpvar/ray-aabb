@@ -14,11 +14,7 @@ var neara = 0;
 var fara = 10;
 
 suite.add('raycast along x axis', function() {
-
-  if (!isect(origina, dira, idira, boxa, neara, fara)) {
-    throw new Error('fail!')
-  }
-
+  isect(origina, dira, idira, boxa, neara, fara);
 })
 
 suite.on('cycle', function(event) {
