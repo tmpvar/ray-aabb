@@ -61,6 +61,10 @@ all vec3s specified are arrays in the format: `[x, y, z]`
 * `near` - the starting point of the interval of the ray under test (`0` will start at `ray_origin`)
 * `far` - the end of the ray interval under test
 
+returns:
+ * `true` if intersection detected
+ * `false` if no intersection
+
 ## license
 
 [MIT](LICENSE.txt)
