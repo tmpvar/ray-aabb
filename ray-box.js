@@ -33,7 +33,6 @@ function intersectRayBox(origin, direction, inv_direction, box, near, far) {
   }
 
   if (tmin > tymax || tymin > tmax) {
-    console.log('bailed here');
     return false;
   }
 
@@ -47,7 +46,7 @@ function intersectRayBox(origin, direction, inv_direction, box, near, far) {
 
   tzmin = (box[sign[2]][2] - origin[2]) * inv_direction[2];
   tzmax = (box[1-sign[2]][2] - origin[2]) * inv_direction[2];
-  console.log(tmin, tzmax, tzmin, tmax);
+
   if (tmin > tzmax || tzmin > tmax) {
     return false;
   }
@@ -59,6 +58,6 @@ function intersectRayBox(origin, direction, inv_direction, box, near, far) {
   if (tzmax < tmax) {
     tmax = tzmax;
   }
-console.log(tmin, tmax);
+
   return (tmin < far && tmax > near);
 }

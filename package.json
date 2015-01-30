@@ -28,6 +28,8 @@
   },
   "homepage": "https://github.com/tmpvar/ray-box",
   "devDependencies": {
+    "gl-vec3": "^1.0.2",
     "tape": "^3.4.0"
-  }
+  },
+  "dependencies": {}
 }
