@@ -1,0 +1,33 @@
+{
+  "name": "ray-box",
+  "version": "1.0.0",
+  "description": "test if a ray intersects a box in 3d space",
+  "main": "ray-box.js",
+  "scripts": {
+    "test": "tape test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tmpvar/ray-box.git"
+  },
+  "keywords": [
+    "geometry",
+    "3d",
+    "ray",
+    "ray-box",
+    "box",
+    "intersection",
+    "collision",
+    "raycast",
+    "ray-cast"
+  ],
+  "author": "Elijah Insua <tmpvar@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tmpvar/ray-box/issues"
+  },
+  "homepage": "https://github.com/tmpvar/ray-box",
+  "devDependencies": {
+    "tape": "^3.4.0"
+  }
+}
