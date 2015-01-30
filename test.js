@@ -1,5 +1,5 @@
 var test = require('tape');
-var isect = require('./ray-box');
+var isect = require('./ray-aabb');
 var vec3 = require('gl-vec3');
 
 test('simple case - intersects (0, 0, 1)', function(t) {

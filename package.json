@@ -1,20 +1,21 @@
 {
-  "name": "ray-box",
+  "name": "ray-aabb",
   "version": "1.0.0",
-  "description": "test if a ray intersects a box in 3d space",
-  "main": "ray-box.js",
+  "description": "test if a ray intersects an aabb in 3d space",
+  "main": "ray-aabb.js",
   "scripts": {
     "test": "tape test.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tmpvar/ray-box.git"
+    "url": "https://github.com/tmpvar/ray-aabb.git"
   },
   "keywords": [
     "geometry",
     "3d",
     "ray",
-    "ray-box",
+    "ray-aabb",
+    "aabb",
     "box",
     "intersection",
     "collision",
@@ -24,9 +25,9 @@
   "author": "Elijah Insua <tmpvar@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tmpvar/ray-box/issues"
+    "url": "https://github.com/tmpvar/ray-aabb/issues"
   },
-  "homepage": "https://github.com/tmpvar/ray-box",
+  "homepage": "https://github.com/tmpvar/ray-aabb",
   "devDependencies": {
     "gl-vec3": "^1.0.2",
     "tape": "^3.4.0"

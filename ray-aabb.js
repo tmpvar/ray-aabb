@@ -1,8 +1,8 @@
-module.exports = intersectRayBox;
+module.exports = intersectRayAABB;
 
 var sign = [0, 0, 0];
 
-function intersectRayBox(origin, direction, inv_direction, box, near, far) {
+function intersectRayAABB(origin, direction, inv_direction, box, near, far) {
   var tmin, tmax, tymin, tymax, tzmin, tzmax;
 
   sign[0] = inv_direction[0] < 0 ? 1 : 0;
