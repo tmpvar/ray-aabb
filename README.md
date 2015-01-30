@@ -31,27 +31,35 @@ var far = 10;
                   |/______|/
 */
 
-var origin = [-1, 1, 0];
+var ray_origin = [-1, 1, 0];
 var box = [
   [0, 0, 0],
   [2, 2, 2]
 ];
-var direction = [1, 0, 0];
+var ray_direction = [1, 0, 0];
 
 // this needs to be computed outside `ray-aabb` to avoid recomputing on every ray cast
-var inv_direction = [
-  1/direction[0],
-  1/direction[1],
-  1/direction[2]
+var ray_inv_direction = [
+  1/ray_direction[0],
+  1/ray_direction[1],
+  1/ray_direction[2]
 ];
 
-console.log(intersectRayAABB(origin, direction, inv_direction, box, near, far));
+console.log(intersectRayAABB(ray_origin, ray_direction, ray_inv_direction, box, near, far));
 // outputs: true
 ```
 
 ## api surface
 
+all vec3s specified are in the format of an array `[x, y, z]`
 
+`intersectRayAABB`'s parameters
+* `ray_origin` - a vec3 defining the ray origin
+* `ray_direction` - a __normalized__ vec3 defining the ray direction
+* `ray_inv_direction` - the reciprical of reciprocal `ray_direction` - precomputed for performance
+* `box` - an array containing two vec3s `[[minx, miny, minz], [maxx, maxy, maxz]]`
+* `near` - the starting point of the interval of the ray under test (`0` will start at `ray_origin`)
+* `far` - the end of the ray interval under test
 
 ## license
 
