@@ -13,8 +13,10 @@ var idira = [1, Infinity, Infinity]
 var neara = 0;
 var fara = 10;
 
+
+var ray = isect.createRay(origina, dira);
 suite.add('raycast along x axis', function() {
-  isect(origina, dira, idira, boxa, neara, fara);
+  isect(ray, boxa);
 })
 
 suite.on('cycle', function(event) {
