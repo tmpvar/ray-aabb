@@ -31,7 +31,6 @@ var MPO = int('110100');
 var PMO = int('011100');
 var PPO = int('010100');
 
-
 var tests = isect.tests = {}
 
 tests[MMM] = function testMMM(ray, box) {
@@ -319,37 +318,22 @@ function isect(ray, box) {
 
 isect.classify = classify;
 
-function classify(rd) {
-  var i = rd[0];
-  var j = rd[1];
-  var k = rd[2];
-  var ret = 0;
+function classify(i, j, k) {
+  // sign
+  i = (i>0) - (i<0);
+  j = (j>0) - (j<0);
+  k = (k>0) - (k<0);
 
-  if (i<0) {
-    ret |= (1 << 5);
-  }
-
-  if (j<0) {
-    ret |= (1 << 3);
-  }
-
-  if (k<0) {
-    ret |= (1 << 1);
-  }
-
-  if (i!==0) {
-    ret |= (1 << 4);
-  }
-
-  if (j!==0) {
-    ret |= (1 << 2);
-  }
-
-  if (k!==0) {
-    ret |= (1 << 0);
-  }
-
-  return ret;
+  // b00110100 === MPO
+  //    ||||||_ k non-zero (false)
+  //    |||||_ k negative (false)
+  //    ||||_ j non-zero (true)
+  //    |||_ j negative (false)
+  //    ||_ i non-zero (true)
+  //    |_ i negative (true)
+  return (i>>>-1) << 5 | ((i>>>0)&1) << 4 |
+         (j>>>-1) << 3 | ((j>>>0)&1) << 2 |
+         (k>>>-1) << 1 | (k>>>0)&1;
 }
 
 isect.createRay = function createRay(ro, rd) {
@@ -374,7 +358,7 @@ isect.createRay = function createRay(ro, rd) {
   ray.c_zx = x - ray.ibyk * z;
   ray.c_zy = y - ray.jbyk * z;
 
-  ray.classification = classify(rd);
+  ray.classification = classify(i, j, k);
 
   return ray;
 };
