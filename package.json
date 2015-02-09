@@ -34,5 +34,7 @@
     "microtime": "^1.2.0",
     "tape": "^3.4.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "ray-direction-classify": "^1.0.1"
+  }
 }
