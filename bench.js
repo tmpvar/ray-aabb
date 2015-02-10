@@ -1,4 +1,4 @@
-var isect = require('./ray-aabb');
+var createRay = require('./ray-aabb');
 var Suite = require('benchmark').Suite;
 
 var suite = new Suite();
@@ -14,9 +14,10 @@ var neara = 0;
 var fara = 10;
 
 
-var ray = isect.createRay(origina, dira);
+
+var ray = createRay(origina, dira);
 suite.add('raycast along x axis', function() {
-  isect(ray, boxa);
+  ray.intersects(boxa);
 })
 
 suite.on('cycle', function(event) {
