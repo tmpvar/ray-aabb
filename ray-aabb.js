@@ -318,8 +318,6 @@ Ray.prototype.update = function updateRay(ro, rd) {
   var i = r.rd[0] = rd[0], j = r.rd[1] = rd[1], k = r.rd[2] = rd[2];
   var x = r.ro[0] = ro[0], y = r.ro[1] = ro[1], z = r.ro[2] = ro[2];
 
-
-
   r.ii = (i)?1.0/i:0;
   r.ij = (j)?1.0/j:0;
   r.ik = (k)?1.0/k:0;

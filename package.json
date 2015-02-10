@@ -20,7 +20,8 @@
     "intersection",
     "collision",
     "raycast",
-    "ray-cast"
+    "ray-cast",
+    "eisemann"
   ],
   "author": "Elijah Insua <tmpvar@gmail.com>",
   "license": "MIT",
