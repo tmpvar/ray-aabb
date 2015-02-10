@@ -7,13 +7,9 @@ var boxa = [
   [-1, -1, -1],
   [ 1,  1,  1]
 ];
+
 var origina = [-2, 0, 0];
 var dira = [1, 0, 0];
-var idira = [1, Infinity, Infinity]
-var neara = 0;
-var fara = 10;
-
-
 
 var ray = createRay(origina, dira);
 suite.add('raycast along x axis', function() {
