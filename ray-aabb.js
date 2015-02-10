@@ -1,8 +1,8 @@
 var classify = require('ray-direction-classify');
 
-module.exports = isect;
+module.exports = createRay;
 
-var tests = isect.tests = {}
+var tests = {};
 
 tests[classify.MMM] = function testMMM(ray, box) {
   var ro = ray.ro;
@@ -283,33 +283,64 @@ tests[classify.PPO] = function testPPO(ray, box) {
           ray.ibyj * box[1][1] - box[0][0] + ray.c_yx < 0) ? false : true;
 };
 
-function isect(ray, box) {
-  return tests[ray.classification] && tests[ray.classification](ray, box);
+
+
+function Ray(ro, rd) {
+  this.ro = [0, 0, 0];
+  this.rd = [0, 0, 0];
+  this.update(ro, rd);
 }
 
-isect.createRay = function createRay(ro, rd) {
-  var ray = { ro: ro, rd: rd };
-  var i = rd[0], j = rd[1], k = rd[2];
-  var x = ro[0], y = ro[1], z = ro[2];
+Ray.prototype.ii = 0.0;
+Ray.prototype.ij = 0.0;
+Ray.prototype.ik = 0.0;
+Ray.prototype.ibyj = 0.0;
+Ray.prototype.jbyi = 0.0;
+Ray.prototype.jbyk = 0.0;
+Ray.prototype.kbyj = 0.0;
+Ray.prototype.ibyk = 0.0;
+Ray.prototype.kbyi = 0.0;
+Ray.prototype.c_xy = 0.0;
+Ray.prototype.c_xz = 0.0;
+Ray.prototype.c_yx = 0.0;
+Ray.prototype.c_yz = 0.0;
+Ray.prototype.c_zx = 0.0;
+Ray.prototype.c_zy = 0.0;
+Ray.prototype.classification = 0.0;
 
-  ray.ii = (i)?1.0/i:0;
-  ray.ij = (j)?1.0/j:0;
-  ray.ik = (k)?1.0/k:0;
-  //ray slope
-  ray.ibyj = i * ray.ij;
-  ray.jbyi = j * ray.ii;
-  ray.jbyk = j * ray.ik;
-  ray.kbyj = k * ray.ij;
-  ray.ibyk = i * ray.ik;
-  ray.kbyi = k * ray.ii;
-  ray.c_xy = y - ray.jbyi * x;
-  ray.c_xz = z - ray.kbyi * x;
-  ray.c_yx = x - ray.ibyj * y;
-  ray.c_yz = z - ray.kbyj * y;
-  ray.c_zx = x - ray.ibyk * z;
-  ray.c_zy = y - ray.jbyk * z;
-
-  ray.classification = classify(i, j, k);
-
-  return ray;
+Ray.prototype.intersects =  function rayIntersectsAABB(aabb) {
+  var t = tests[this.classification];
+  return t && t(this, aabb);
 };
+
+Ray.prototype.update = function updateRay(ro, rd) {
+  var r = this;
+  var i = r.rd[0] = rd[0], j = r.rd[1] = rd[1], k = r.rd[2] = rd[2];
+  var x = r.ro[0] = ro[0], y = r.ro[1] = ro[1], z = r.ro[2] = ro[2];
+
+
+
+  r.ii = (i)?1.0/i:0;
+  r.ij = (j)?1.0/j:0;
+  r.ik = (k)?1.0/k:0;
+  //ray slope
+  r.ibyj = i * r.ij;
+  r.jbyi = j * r.ii;
+  r.jbyk = j * r.ik;
+  r.kbyj = k * r.ij;
+  r.ibyk = i * r.ik;
+  r.kbyi = k * r.ii;
+  r.c_xy = y - r.jbyi * x;
+  r.c_xz = z - r.kbyi * x;
+  r.c_yx = x - r.ibyj * y;
+  r.c_yz = z - r.kbyj * y;
+  r.c_zx = x - r.ibyk * z;
+  r.c_zy = y - r.jbyk * z;
+
+  r.classification = classify(i, j, k);
+  return r;
+};
+
+function createRay(rayOrigin, rayDirection) {
+  return new Ray(rayOrigin, rayDirection)
+}
