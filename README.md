@@ -2,12 +2,7 @@
 
 test if a ray intersects an aabb in 3d space
 
-ported from http://www.cs.utah.edu/~awilliam/box/
-
-> Amy Williams, Steve Barrus, R. Keith Morley, and Peter Shirley
-> "An Efficient and Robust Ray-Box Intersection Algorithm"
-> Journal of graphics tools, 10(1):49-54, 2005
-
+Implemented via the techniques described in [Fast Ray/Axis-Aligned Bounding Box Overlap Tests using Ray Slopes](http://www.cg.cs.tu-bs.de/publications/Eisemann07FRA/)
 
 ## install
 
@@ -16,11 +11,7 @@ ported from http://www.cs.utah.edu/~awilliam/box/
 ## use
 
 ```javascript
-var intersectRayAABB = require('ray-aabb');
-
-// setup an interval in which the ray is valid (i.e. inside the frustnum of a 3d scene)
-var near = 0;
-var far = 10;
+var createRay = require('ray-aabb');
 
 /*
                      _______
@@ -32,38 +23,59 @@ var far = 10;
 */
 
 var ray_origin = [-1, 1, 0];
+var ray_direction = [1, 0, 0];
+var ray = createRay(ray_origin, ray_direction);
+
 var box = [
   [0, 0, 0],
   [2, 2, 2]
 ];
-var ray_direction = [1, 0, 0];
 
-// this needs to be computed outside `ray-aabb` to avoid recomputing on every ray cast
-var ray_inv_direction = [
-  1/ray_direction[0],
-  1/ray_direction[1],
-  1/ray_direction[2]
-];
-
-console.log(intersectRayAABB(ray_origin, ray_direction, ray_inv_direction, box, near, far));
+console.log(ray.intersects(box));
 // outputs: true
+
+// avoid allocating new memory by reusing rays
+ray.update(ray_origin, [-1, 0, 0]);
+
+console.log(ray.intersects(box));
+// outputs: false
+
 ```
 
 ## api surface
 
 all vec3s specified are arrays in the format: `[x, y, z]`
 
-`intersectRayAABB`'s parameters
+`createRay(ray_origin, ray_direction)`'s parameters
 * `ray_origin` - a vec3 defining the ray origin
-* `ray_direction` - a __normalized__ vec3 defining the ray direction
-* `ray_inv_direction` - the reciprocal of `ray_direction` - precomputed for performance
-* `box` - an array containing two vec3s `[[minx, miny, minz], [maxx, maxy, maxz]]`
-* `near` - the starting point of the interval of the ray under test (`0` will start at `ray_origin`)
-* `far` - the end of the ray interval under test
+* `ray_direction` - a vec3 defining the ray direction (does not need to be normalized)
 
-returns:
+_returns_: a `Ray` instance
+
+---
+
+`Ray#update(ray_origin, ray_direction)`
+
+Allows `Ray` instances to be reused by precomputing ray classification.  The intention here is that you will be casting a ray against __many__ aabbs
+
+_returns_: `this` (e.g. `ray.update(ro, rd).intersects(box)`
+
+---
+
+`Ray#intersects(aabb)`
+where `aabb` specifies the corners of the bounding box:
+
+```javascript
+[[x1, y1, z1], [x2, y2, z2]]
+```
+
+_returns_
  * `true` if intersection detected
  * `false` if no intersection
+
+## platforms
+
+node, io.js, and evergreen browsers using [browserify](browserify.io)
 
 ## license
 
