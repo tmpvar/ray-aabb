@@ -43,7 +43,7 @@ function unproject(out, vec, z, view, proj, viewport) {
   out[2] = 2.0 * z - 1.0;
 
   mat4.multiply(m4scratch, proj, view);
-  vec3.transformMat4(out, out, mat4.invert(m4scratch, m4scratch));
+  // vec3.transformMat4(out, out, mat4.invert(m4scratch, m4scratch));
 
   return out;
 };
@@ -54,7 +54,7 @@ var view = mat4.create();
 var model = mat4.create();
 var eye = vec3.create();
 var scene = [
-  [[1, 1, 1], [10, 10, 10]]
+  [[-1, -1, -1], [1, 1, 1]]
 ];
 
 var ro = [0, 0, 0];
@@ -74,7 +74,7 @@ function frame() {
   camera.view(view);
   getEye(ro, view);
 
-  fill(imageData.pick(null, null, 0), function(x, y) {
+  fill(imageData.pick(null, null, 0), function(y, x) {
     v2a[0] = x;
     v2a[1] = viewport[3] - y;
 
@@ -88,8 +88,6 @@ function frame() {
     );
 
     vec3.normalize(rd, rd);
-    // rd[0] = -rd[0];
-    // rd[1] = -rd[1];
     return (ray.update(ro, rd).intersects(scene[0])) * 255;
   });
 
