@@ -8,7 +8,7 @@ var fill = require('ndarray-fill');
 ctx.reset();
 ctx.clear();
 var id = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
-var imageData = ndarray(id.data, [ctx.canvas.width, ctx.canvas.height, 4])
+var imageData = ndarray(id.data, [ctx.canvas.height, ctx.canvas.width, 4])
 
 var camera = require("orbit-camera")(
   [0, 5, -3],
