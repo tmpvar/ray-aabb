@@ -11,8 +11,8 @@ var id = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
 var imageData = ndarray(id.data, [ctx.canvas.height, ctx.canvas.width, 4])
 
 var camera = require("orbit-camera")(
-  [0, 5, -3],
-  [6, 6, 6],
+  [0, 0, -3],
+  [0, 0, 0],
   [0, 1, 0]
 );
 
