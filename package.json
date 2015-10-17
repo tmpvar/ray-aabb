@@ -6,7 +6,8 @@
   "scripts": {
     "test": "tape test.js",
     "bench": "node bench.js",
-    "demo-2d": "budo demo/2d.js"
+    "demo-2d": "budo demo/2d.js",
+    "demo-raytracer": "budo demo/raytracer.js"
   },
   "repository": {
     "type": "git",
@@ -34,12 +35,17 @@
   "devDependencies": {
     "benchmark": "^1.0.0",
     "budo": "^5.1.4",
+    "camera-unproject": "^1.0.1",
     "ctx-circle": "^1.0.0",
     "ctx-translate-center": "^1.0.0",
     "fc": "^1.4.3",
+    "gl-mat4": "^1.1.4",
     "gl-vec2": "^1.0.0",
     "gl-vec3": "^1.0.2",
     "microtime": "^1.2.0",
+    "ndarray": "^1.0.18",
+    "ndarray-fill": "^1.0.1",
+    "orbit-camera": "^1.0.0",
     "tape": "^3.4.0"
   },
   "dependencies": {
