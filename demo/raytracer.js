@@ -88,6 +88,9 @@ var ctx = fc(function() {
   ctx.clear();
   var w = viewport[2] = ctx.canvas.width;
   var h = viewport[3] = ctx.canvas.height;
+  var imageData = ctx.createImageData(w, h);
+  var buffer = imageData.data;
+
   var aspect = w/h
   m4perspective(
     projection,
@@ -97,23 +100,19 @@ var ctx = fc(function() {
     1000.0
   )
 
-
-
   camera.view(view)
 
   m4invert(
     m4inverted,
     m4mutiply(m4inverted, projection, view)
   );
-
-  var step = 5;
-  var halfstep = (step/2)|0;
+  var step = 1;
   getEye(rayOrigin, view);
+  for (var y=0; y<h; y+=step) {
+    near[1] = y;
 
-  for (var x = 0; x<w; x+=step) {
-    near[0] = x;
-    for (var y=0; y<h; y+=step) {
-      near[1] = y;
+    for (var x = 0; x<w; x+=step) {
+      near[0] = x;
 
       unproject(rayDirection, near, viewport, m4inverted)
 
@@ -128,13 +127,20 @@ var ctx = fc(function() {
         [-1, -1, -1],
         [1, 1, 1]
       ], true)
-      if (d !== false) {
-        ctx.fillStyle = "green";
-      } else {
-        ctx.fillStyle = "red"
-      }
 
-      ctx.fillRect(2+x-halfstep, 2+y-halfstep, step-2, step-2)
+      var c = x*4 + y*w*4;
+
+      if (d !== false) {
+        buffer[c+1] = 255;
+        buffer[c+3] = 255;
+      } else {
+        buffer[c+0] = 0x11;
+        buffer[c+1] = 0x11;
+        buffer[c+2] = 0x22;
+        buffer[c+3] = 0xff;
+      }
     }
   }
+
+  ctx.putImageData(imageData, 0, 0);
 })
