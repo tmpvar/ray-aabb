@@ -301,12 +301,20 @@ lerps[classify.MMM] = function lerpMMM(ray, aabb, norm) {
   return max(a, b, c);
 };
 
-lerps[classify.MMP] = function(ray, aabb, norm) {
-  return max(
-    (aabb[1][0] - ray.ro[0]) * ray.ii,
-    (aabb[1][1] - ray.ro[1]) * ray.ij,
-    (aabb[0][2] - ray.ro[2]) * ray.ik
-  );
+lerps[classify.MMP] = function lerpMMP(ray, aabb, norm) {
+  var ro = ray.ro;
+  var ub = aabb[1];
+  var lb = aabb[0];
+
+  var a = (ub[0] - ro[0]) * ray.ii;
+  var b = (ub[1] - ro[1]) * ray.ij;
+  var c = (lb[2] - ro[2]) * ray.ik;
+
+  norm[0] = +(a >= b && a >= c);
+  norm[1] = +(b >= c && b >= a);
+  norm[2] = -(c >= a && c >= b);
+
+  return max(a, b, c);
 };
 
 lerps[classify.MPM] = function(ray, aabb, norm) {
