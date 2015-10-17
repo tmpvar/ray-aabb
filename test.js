@@ -1,6 +1,19 @@
 var test = require('tape');
 var createRay = require('./ray-aabb');
 var vec3 = require('gl-vec3');
+var classify = require('ray-direction-classify');
+
+var obox = [[-1, -1, -1], [1, 1, 1]];
+
+function intersect(origin, direction, box) {
+  var normal = [0, 0, 0]
+  vec3.normalize(direction, direction)
+  var ray = createRay(origin, direction);
+  if (ray.intersects(box, normal)) {
+    return normal
+  }
+  return false;
+}
 
 test('MMM', function(t) {
   var box = [
@@ -941,6 +954,72 @@ test('rotated on the x - isect', function(t) {
 
     t.ok(createRay(origin, direction).intersects(box), 'intersects');
   }
+
+  t.end();
+});
+
+test('lerp MMM - ub x,y,z corner', function(t) {
+  var normal = intersect([2, 2, 2], [-1, -1, -1], obox);
+  t.deepEqual(normal, [1, 1, 1])
+  t.end();
+});
+
+test('lerp MMM - ub x,y edge', function(t) {
+  var normal = intersect([2, 2, 2], [-1, -1, -1.2], obox);
+  t.deepEqual(normal, [1, 1, 0]);
+
+  var normal2 = intersect([2, 2, 1], [-1, -1, -1], obox);
+  t.deepEqual(normal, normal2);
+
+  t.end();
+});
+
+test('lerp MMM - ub z,x edge', function(t) {
+  var normal = intersect([2, 2, 2], [-1, -1.2, -1], obox);
+  t.deepEqual(normal, [1, 0, 1]);
+
+  var normal2 = intersect([2, 1, 2], [-1, -1, -1], obox);
+  t.deepEqual(normal, normal2);
+
+  t.end();
+});
+
+test('lerp MMM - ub z,y edge', function(t) {
+  var normal = intersect([2, 2, 2], [-1.2, -1, -1], obox);
+  t.deepEqual(normal, [0, 1, 1]);
+
+  var normal2 = intersect([1, 2, 2], [-1, -1, -1], obox);
+  t.deepEqual(normal, normal2);
+
+  t.end();
+});
+
+test('lerp MMM - ub x edge', function(t) {
+  var normal = intersect([2, 2, 2], [-1, -2, -1.2], obox);
+  t.deepEqual(normal, [1, 0, 0]);
+
+  var normal2 = intersect([2, 1, 1], [-1, -1, -1], obox);
+  t.deepEqual(normal, normal2);
+
+t.end();
+});
+
+test('lerp MMM - ub y edge', function(t) {
+  var normal = intersect([2, 2, 2], [-1.2, -1, -2], obox);
+  t.deepEqual(normal, [0, 1, 0]);
+
+  var normal2 = intersect([1, 2, 1], [-1, -1, -1], obox);
+  t.deepEqual(normal, normal2);
+
+  t.end();
+});
+
+test('lerp MMM - ub z edge', function(t) {
+  var normal = intersect([2, 2, 2], [-1.2, -1.2, -1], obox);
+  t.deepEqual(normal, [0, 0, 1]);
+
+  var normal2 = intersect([1, 1, 2], [-1, -1, -1], obox);
+  t.deepEqual(normal, normal2);
 
   t.end();
 });
