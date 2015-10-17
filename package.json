@@ -5,7 +5,8 @@
   "main": "ray-aabb.js",
   "scripts": {
     "test": "tape test.js",
-    "bench": "node bench.js"
+    "bench": "node bench.js",
+    "demo-2d": "budo demo/2d.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,11 @@
   "homepage": "https://github.com/tmpvar/ray-aabb",
   "devDependencies": {
     "benchmark": "^1.0.0",
+    "budo": "^5.1.4",
+    "ctx-circle": "^1.0.0",
+    "ctx-translate-center": "^1.0.0",
+    "fc": "^1.4.3",
+    "gl-vec2": "^1.0.0",
     "gl-vec3": "^1.0.2",
     "microtime": "^1.2.0",
     "tape": "^3.4.0"

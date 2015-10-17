@@ -3,6 +3,8 @@ var classify = require('ray-direction-classify');
 module.exports = createRay;
 
 var tests = {};
+var max = Math.max;
+var abs = Math.abs;
 
 tests[classify.MMM] = function testMMM(ray, box) {
   var ro = ray.ro;
@@ -283,6 +285,179 @@ tests[classify.PPO] = function testPPO(ray, box) {
           ray.ibyj * box[1][1] - box[0][0] + ray.c_yx < 0);
 };
 
+var lerps = {};
+
+lerps[classify.MMM] = function(ray, aabb) {
+  return max(
+    (aabb[1][0] - ray.ro[0]) * ray.ii,
+    (aabb[1][1] - ray.ro[1]) * ray.ij,
+    (aabb[1][2] - ray.ro[2]) * ray.ik
+  );
+};
+
+lerps[classify.MMP] = function(ray, aabb) {
+  return max(
+    (aabb[1][0] - ray.ro[0]) * ray.ii,
+    (aabb[1][1] - ray.ro[1]) * ray.ij,
+    (aabb[0][2] - ray.ro[2]) * ray.ik
+  );
+};
+
+lerps[classify.MPM] = function(ray, aabb) {
+  return max(
+    (aabb[1][0] - ray.ro[0]) * ray.ii,
+    (aabb[0][1] - ray.ro[1]) * ray.ij,
+    (aabb[1][2] - ray.ro[2]) * ray.ik
+  );
+};
+
+lerps[classify.MPP] = function(ray, aabb) {
+  return max(
+    (aabb[1][0] - ray.ro[0]) * ray.ii,
+    (aabb[0][1] - ray.ro[1]) * ray.ij,
+    (aabb[0][2] - ray.ro[2]) * ray.ik
+  );
+};
+
+lerps[classify.PMM] = function(ray, aabb) {
+  return max(
+    (aabb[0][0] - ray.ro[0]) * ray.ii,
+    (aabb[1][1] - ray.ro[1]) * ray.ij,
+    (aabb[1][2] - ray.ro[2]) * ray.ik
+  );
+};
+
+lerps[classify.PMP] = function(ray, aabb) {
+  return max(
+    (aabb[0][0] - ray.ro[0]) * ray.ii,
+    (aabb[1][1] - ray.ro[1]) * ray.ij,
+    (aabb[0][2] - ray.ro[2]) * ray.ik
+  );
+};
+
+lerps[classify.PPM] = function(ray, aabb) {
+  return max(
+    (aabb[0][0] - ray.ro[0]) * ray.ii,
+    (aabb[0][1] - ray.ro[1]) * ray.ij,
+    (aabb[1][2] - ray.ro[2]) * ray.ik
+  );
+};
+
+lerps[classify.PPP] = function(ray, aabb) {
+  return max(
+    (aabb[0][0] - ray.ro[0]) * ray.ii,
+    (aabb[0][1] - ray.ro[1]) * ray.ij,
+    (aabb[0][2] - ray.ro[2]) * ray.ik
+  );
+};
+
+lerps[classify.OMM] = function(ray, aabb) {
+  return max(
+    (aabb[1][1] - ray.ro[1]) * ray.ij,
+    (aabb[1][2] - ray.ro[2]) * ray.ik
+  );
+};
+
+lerps[classify.OMP] = function(ray, aabb) {
+  return max(
+    (aabb[1][1] - ray.ro[1]) * ray.ij,
+    (aabb[0][2] - ray.ro[2]) * ray.ik
+  );
+};
+
+lerps[classify.OPM] = function(ray, aabb) {
+  return max(
+    (aabb[0][1] - ray.ro[1]) * ray.ij,
+    (aabb[1][2] - ray.ro[2]) * ray.ik
+  );
+};
+
+lerps[classify.OPP] = function(ray, aabb) {
+  return max(
+    (aabb[0][1] - ray.ro[1]) * ray.ij,
+    (aabb[0][2] - ray.ro[2]) * ray.ik
+  );
+}
+
+lerps[classify.MOM] = function(ray, aabb) {
+  return max(
+    (aabb[1][0] - ray.ro[0]) * ray.ii,
+    (aabb[1][2] - ray.ro[2]) * ray.ik
+  );
+};
+
+lerps[classify.MOP] = function(ray, aabb) {
+  return min(
+    (aabb[1][0] - ray.ro[0]) * ray.ii,
+    (aabb[0][2] - ray.ro[2]) * ray.ik
+  );
+};
+
+lerps[classify.POM] = function(ray, aabb) {
+  return max(
+    (aabb[0][0] - ray.ro[0]) * ray.ii,
+    (aabb[1][2] - ray.ro[2]) * ray.ik
+  );
+};
+
+lerps[classify.POP] = function(ray, aabb) {
+  return max(
+    (aabb[0][0] - ray.ro[0]) * ray.ii,
+    (aabb[0][2] - ray.ro[2]) * ray.ik
+  );
+}
+
+lerps[classify.MMO] = function(ray, aabb) {
+  return max(
+    (aabb[1][0] - ray.ro[0]) * ray.ii,
+    t1 = (aabb[1][1] - ray.ro[1]) * ray.ij
+  );
+}
+
+lerps[classify.MPO] = function(ray, aabb) {
+  return max(
+    (aabb[1][0] - ray.ro[0]) * ray.ii,
+    (aabb[0][1] - ray.ro[1]) * ray.ij
+  );
+};
+
+lerps[classify.PMO] = function(ray, aabb) {
+  return max(
+    (aabb[0][0] - ray.ro[0]) * ray.ii,
+    (aabb[1][1] - ray.ro[1]) * ray.ij
+  );
+};
+
+lerps[classify.PPO] = function(ray, aabb) {
+  return max(
+    (aabb[0][0] - ray.ro[0]) * ray.ii,
+    (aabb[0][1] - ray.ro[1]) * ray.ij
+  );
+};
+
+lerps[classify.MOO] = function(ray, aabb) {
+  return (aabb[1][0] - ray.ro[0]) * ray.ii;
+};
+
+lerps[classify.POO] = function(ray, aabb) {
+  return (aabb[0][0] - ray.ro[0]) * ray.ii;
+};
+
+lerps[classify.OMO] = function(ray, aabb) {
+  return (aabb[1][1] - ray.ro[1]) * ray.ij;
+};
+
+lerps[classify.OPO] = function(ray, aabb) {
+  return (aabb[0][1] - ray.ro[1]) * ray.ij;
+};
+
+lerps[classify.OOM] = function(ray, aabb) {
+  return (aabb[1][2] - ray.ro[2]) * ray.ik;
+};
+
+lerps[classify.OOP] = function(ray, aabb) {
+  return (aabb[0][2] - ray.ro[2]) * ray.ik;
+}
 
 
 function Ray(ro, rd) {
@@ -307,10 +482,20 @@ Ray.prototype.c_yz = 0.0;
 Ray.prototype.c_zx = 0.0;
 Ray.prototype.c_zy = 0.0;
 Ray.prototype.classification = 0.0;
+Ray.prototype.result = null;
 
-Ray.prototype.intersects =  function rayIntersectsAABB(aabb) {
-  var t = tests[this.classification];
-  return t && t(this, aabb);
+Ray.prototype.intersects =  function rayIntersectsAABB(aabb, computeDistance) {
+  var classification = this.classification;
+  var t = tests[classification];
+  if (t && t(this, aabb)) {
+    if (!computeDistance) {
+      return true;
+    }
+
+    var lerp = lerps[classification]
+    return lerp && lerp(this, aabb);
+  }
+  return false;
 };
 
 Ray.prototype.update = function updateRay(ro, rd) {
