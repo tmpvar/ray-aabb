@@ -86,7 +86,9 @@ var near = [0, 0, 0];
 
 var ctx = fc(function() {
   ctx.clear();
-  var aspect = ctx.canvas.height/ctx.canvas.width
+  var w = viewport[2] = ctx.canvas.width;
+  var h = viewport[3] = ctx.canvas.height;
+  var aspect = w/h
   m4perspective(
     projection,
     Math.PI/4.0,
@@ -95,8 +97,7 @@ var ctx = fc(function() {
     1000.0
   )
 
-  var w = viewport[2] = ctx.canvas.width;
-  var h = viewport[3] = ctx.canvas.height;
+
 
   camera.view(view)
 
@@ -105,7 +106,7 @@ var ctx = fc(function() {
     m4mutiply(m4inverted, projection, view)
   );
 
-  var step = 10;
+  var step = 5;
   var halfstep = (step/2)|0;
   getEye(rayOrigin, view);
 
