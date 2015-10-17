@@ -958,134 +958,78 @@ test('rotated on the x - isect', function(t) {
   t.end();
 });
 
-test('lerp MMM - ub x,y,z corner', function(t) {
-  var normal = intersect([2, 2, 2], [-1, -1, -1], obox);
-  t.deepEqual(normal, [1, 1, 1])
-  t.end();
-});
+function buildNormalTest(x, y, z) {
+  test('normals for ' + [x,y,z].join(','), function(t) {
+    var sx = x < 0 ? -1 : 1;
+    var sy = y < 0 ? -1 : 1;
+    var sz = z < 0 ? -1 : 1;
 
-test('lerp MMM - ub x,y edge', function(t) {
-  var normal = intersect([2, 2, 2], [-1, -1, -1.2], obox);
-  t.deepEqual(normal, [1, 1, 0]);
+    // test face hits
+    if (x) {
+      var xface = intersect([-x*2, -y*2, -z*2], [x, y*1.2, z*1.2], obox);
+      var xface2 = intersect([-x*2, -y, -z], [sx, sy, sz], obox);
 
-  var normal2 = intersect([2, 2, 1], [-1, -1, -1], obox);
-  t.deepEqual(normal, normal2);
+      t.deepEqual(xface, [-sx, 0, 0], 'xface direction change');
+      t.deepEqual(xface2, xface, 'xface origin change');
+    }
 
-  t.end();
-});
+    if (y) {
+      var yface = intersect([-x*2, -y*2, -z*2], [x*1.2, y, z*1.2], obox);
+      var yface2 = intersect([-x, -y*2, -z], [sx, sy, sz], obox);
 
-test('lerp MMM - ub z,x edge', function(t) {
-  var normal = intersect([2, 2, 2], [-1, -1.2, -1], obox);
-  t.deepEqual(normal, [1, 0, 1]);
+      t.deepEqual([0, -sy, 0], yface, 'yface direction change');
+      t.deepEqual(yface2, yface, 'yface origin change');
+    }
 
-  var normal2 = intersect([2, 1, 2], [-1, -1, -1], obox);
-  t.deepEqual(normal, normal2);
+    if (z) {
+      var zface = intersect([-x*2, -y*2, -z*2], [x*1.2, y*1.2, z], obox);
+      var zface2 = intersect([-x, -y, -z*2], [sx, sy, sz], obox);
 
-  t.end();
-});
+      t.deepEqual(zface, [0, 0, -sz], 'zface direction change');
+      t.deepEqual(zface2, zface, 'zface origin change');
+    }
 
-test('lerp MMM - ub z,y edge', function(t) {
-  var normal = intersect([2, 2, 2], [-1.2, -1, -1], obox);
-  t.deepEqual(normal, [0, 1, 1]);
+    // count the number of available components
+    var c = (x&1) + (y&1) + (z&1);
 
-  var normal2 = intersect([1, 2, 2], [-1, -1, -1], obox);
-  t.deepEqual(normal, normal2);
+    // test edge hits
+    if (c > 1) {
+      if (x && y) {
+        var xyedge = intersect([-x*2, -y*2, -z*2], [x, y, z*1.2], obox);
+        var xyedge2 = intersect([-x*2, -y*2, -z], [x, y, z], obox);
+        t.deepEqual(xyedge, [-sx, -sy, 0], 'x/y edge direction change');
+        t.deepEqual(xyedge, xyedge2, 'x/y edge origin change');
+      }
 
-  t.end();
-});
+      if (y && z) {
+        var yzedge = intersect([-x*2, -y*2, -z*2], [x*1.2, y, z], obox);
+        var yzedge2 = intersect([-x, -y*2, -z*2], [x, y, z], obox);
+        t.deepEqual(yzedge, [0, -sy, -sz], 'y/z edge direction change');
+        t.deepEqual(yzedge, yzedge2, 'y/z edge origin change');
+      }
 
-test('lerp MMM - ub x edge', function(t) {
-  var normal = intersect([2, 2, 2], [-1, -2, -1.2], obox);
-  t.deepEqual(normal, [1, 0, 0]);
+      if (x && z) {
+        var xzedge = intersect([-x*2, -y*2, -z*2], [x, y*1.2, z], obox);
+        var xzedge2 = intersect([-x*2, -y, -z*2], [x, y, z], obox);
+        t.deepEqual(xzedge, [-sx, 0, -sz], 'x/z edge direction change');
+        t.deepEqual(xzedge, xzedge2, 'x/z edge origin change');
+      }
+    }
 
-  var normal2 = intersect([2, 1, 1], [-1, -1, -1], obox);
-  t.deepEqual(normal, normal2);
+    // test corner hits
+    if (c > 2) {
+      var corner = intersect([-x*2, -y*2, -z*2], [x, y, z], obox);
+      t.deepEqual(corner, [-sx, -sy, -sz], 'corner');
+    }
 
-t.end();
-});
+    t.end()
+  })
+}
 
-test('lerp MMM - ub y edge', function(t) {
-  var normal = intersect([2, 2, 2], [-1.2, -1, -2], obox);
-  t.deepEqual(normal, [0, 1, 0]);
-
-  var normal2 = intersect([1, 2, 1], [-1, -1, -1], obox);
-  t.deepEqual(normal, normal2);
-
-  t.end();
-});
-
-test('lerp MMM - ub z edge', function(t) {
-  var normal = intersect([2, 2, 2], [-1.2, -1.2, -1], obox);
-  t.deepEqual(normal, [0, 0, 1]);
-
-  var normal2 = intersect([1, 1, 2], [-1, -1, -1], obox);
-  t.deepEqual(normal, normal2);
-
-  t.end();
-});
-
-test('lerp MMP - +x,+y,-z corner', function(t) {
-  var normal = intersect([2, 2, -2], [-1, -1, 1], obox);
-  t.deepEqual(normal, [1, 1, -1])
-  t.end();
-});
-
-test('lerp MMP - +x,+y edge', function(t) {
-  var normal = intersect([2, 2, -2], [-1, -1, 1.2], obox);
-  t.deepEqual(normal, [1, 1, 0]);
-
-  var normal2 = intersect([2, 2, -1], [-1, -1, 1], obox);
-  t.deepEqual(normal, normal2);
-
-  t.end();
-});
-
-test('lerp MMP - +x,-z edge', function(t) {
-  var normal = intersect([2, 2, -2], [-1, -1.2, 1], obox);
-  t.deepEqual(normal, [1, 0, -1]);
-
-  var normal2 = intersect([2, 1, -2], [-1, -1, 1], obox);
-  t.deepEqual(normal, normal2);
-
-  t.end();
-});
-
-test('lerp MMP - +y,-z edge', function(t) {
-  var normal = intersect([2, 2, -2], [-1.2, -1, 1], obox);
-  t.deepEqual(normal, [0, 1, -1]);
-
-  var normal2 = intersect([1, 2, -2], [-1, -1, 1], obox);
-  t.deepEqual(normal, normal2);
-
-  t.end();
-});
-
-test('lerp MMP - +x face', function(t) {
-  var normal = intersect([2, 2, -2], [-1, -1.2, 1.2], obox);
-  t.deepEqual(normal, [1, 0, 0]);
-
-  var normal2 = intersect([2, 1, -1], [-1, -1, 1], obox);
-  t.deepEqual(normal, normal2);
-
-  t.end();
-});
-
-test('lerp MMP - +y face', function(t) {
-  var normal = intersect([2, 2, -2], [-1.2, -1, 1.2], obox);
-  t.deepEqual(normal, [0, 1, 0]);
-
-  var normal2 = intersect([1, 2, -1], [-1, -1, 1], obox);
-  t.deepEqual(normal, normal2);
-
-  t.end();
-});
-
-test('lerp MMP - +y face', function(t) {
-  var normal = intersect([2, 2, -2], [-1.2, -1.2, 1], obox);
-  t.deepEqual(normal, [0, 0, -1]);
-
-  var normal2 = intersect([1, 1, -2], [-1, -1, 1], obox);
-  t.deepEqual(normal, normal2);
-
-  t.end();
-});
+for (var x=-1; x<=1; x++) {
+  for (var y=-1; y<=1; y++) {
+    for (var z=-1; z<=1; z++) {
+      buildNormalTest(x, y, z)
+    }
+  }
+}
