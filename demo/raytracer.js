@@ -5,7 +5,7 @@ var v3dist = require('gl-vec3/distance');
 var m4create = require('gl-mat4/create');
 var m4perspective = require('gl-mat4/perspective');
 var m4invert = require('gl-mat4/invert');
-var m4mutiply = require('gl-mat4/invert');
+var m4mutiply = require('gl-mat4/multiply');
 var createRay = require('../ray-aabb');
 var ndarray = require('ndarray');
 var fill = require('ndarray-fill');
@@ -82,7 +82,7 @@ window.addEventListener('mousewheel', function(ev) {
 });
 
 var viewport = [0, 0, 0, 0];
-var near = [0, 0, 1];
+var near = [0, 0, 0];
 
 var ctx = fc(function() {
   ctx.clear();
@@ -105,7 +105,7 @@ var ctx = fc(function() {
     m4mutiply(m4inverted, projection, view)
   );
 
-  var step = 100;
+  var step = 10;
   var halfstep = (step/2)|0;
   getEye(rayOrigin, view);
 
@@ -119,7 +119,7 @@ var ctx = fc(function() {
       v3normalize(
         rayDirection,
         v3sub(rayDirection, rayDirection, rayOrigin)
-      )
+      );
 
       ray.update(rayOrigin, rayDirection);
 
@@ -136,14 +136,4 @@ var ctx = fc(function() {
       ctx.fillRect(2+x-halfstep, 2+y-halfstep, step-2, step-2)
     }
   }
-
-//2D point in screen space
-//z=0 means "near plane"
-var point = [123, 52, 0]
-
-//vec3 output
-var output = []
-
-
-
 })
