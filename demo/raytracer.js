@@ -13,7 +13,7 @@ var unproject = require('camera-unproject');
 
 var createOrbitCamera = require("orbit-camera")
 
-var camera = createOrbitCamera([0, 0, -2],
+var camera = createOrbitCamera([5, 5, -10],
                                [0, 0, 0],
                                [0, 1, 0])
 var projection = m4create();
