@@ -387,7 +387,7 @@ lerps[classify.MOM] = function(ray, aabb) {
 };
 
 lerps[classify.MOP] = function(ray, aabb) {
-  return min(
+  return max(
     (aabb[1][0] - ray.ro[0]) * ray.ii,
     (aabb[0][2] - ray.ro[2]) * ray.ik
   );
