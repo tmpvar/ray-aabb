@@ -1,6 +1,6 @@
 {
   "name": "ray-aabb",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "test if a ray intersects an aabb in 3d space",
   "main": "ray-aabb.js",
   "scripts": {
