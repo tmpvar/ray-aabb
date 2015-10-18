@@ -6,283 +6,283 @@ var tests = {};
 var max = Math.max;
 var abs = Math.abs;
 
-tests[classify.MMM] = function testMMM(ray, box) {
+tests[classify.MMM] = function testMMM(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[0] < box[0][0] ||
-          ro[1] < box[0][1] ||
-          ro[2] < box[0][2] ||
-          ray.jbyi * box[0][0] - box[1][1] + ray.c_xy > 0 ||
-          ray.ibyj * box[0][1] - box[1][0] + ray.c_yx > 0 ||
-          ray.jbyk * box[0][2] - box[1][1] + ray.c_zy > 0 ||
-          ray.kbyj * box[0][1] - box[1][2] + ray.c_yz > 0 ||
-          ray.kbyi * box[0][0] - box[1][2] + ray.c_xz > 0 ||
-          ray.ibyk * box[0][2] - box[1][0] + ray.c_zx > 0);
+  return !(ro[0] < lb[0] ||
+          ro[1] < lb[1] ||
+          ro[2] < lb[2] ||
+          ray.jbyi * lb[0] - ub[1] + ray.c_xy > 0 ||
+          ray.ibyj * lb[1] - ub[0] + ray.c_yx > 0 ||
+          ray.jbyk * lb[2] - ub[1] + ray.c_zy > 0 ||
+          ray.kbyj * lb[1] - ub[2] + ray.c_yz > 0 ||
+          ray.kbyi * lb[0] - ub[2] + ray.c_xz > 0 ||
+          ray.ibyk * lb[2] - ub[0] + ray.c_zx > 0);
 };
-tests[classify.MMP] = function testMMP(ray, box) {
+tests[classify.MMP] = function testMMP(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[0] < box[0][0] ||
-          ro[1] < box[0][1] ||
-          ro[2] > box[1][2] ||
-          ray.jbyi * box[0][0] - box[1][1] + ray.c_xy > 0 ||
-          ray.ibyj * box[0][1] - box[1][0] + ray.c_yx > 0 ||
-          ray.jbyk * box[1][2] - box[1][1] + ray.c_zy > 0 ||
-          ray.kbyj * box[0][1] - box[0][2] + ray.c_yz < 0 ||
-          ray.kbyi * box[0][0] - box[0][2] + ray.c_xz < 0 ||
-          ray.ibyk * box[1][2] - box[1][0] + ray.c_zx > 0);
+  return !(ro[0] < lb[0] ||
+          ro[1] < lb[1] ||
+          ro[2] > ub[2] ||
+          ray.jbyi * lb[0] - ub[1] + ray.c_xy > 0 ||
+          ray.ibyj * lb[1] - ub[0] + ray.c_yx > 0 ||
+          ray.jbyk * ub[2] - ub[1] + ray.c_zy > 0 ||
+          ray.kbyj * lb[1] - lb[2] + ray.c_yz < 0 ||
+          ray.kbyi * lb[0] - lb[2] + ray.c_xz < 0 ||
+          ray.ibyk * ub[2] - ub[0] + ray.c_zx > 0);
 };
-tests[classify.MPM] = function testMPM(ray, box) {
+tests[classify.MPM] = function testMPM(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[0] < box[0][0] ||
-          ro[1] > box[1][1] ||
-          ro[2] < box[0][2] ||
-          ray.jbyi * box[0][0] - box[0][1] + ray.c_xy < 0 ||
-          ray.ibyj * box[1][1] - box[1][0] + ray.c_yx > 0 ||
-          ray.jbyk * box[0][2] - box[0][1] + ray.c_zy < 0 ||
-          ray.kbyj * box[1][1] - box[1][2] + ray.c_yz > 0 ||
-          ray.kbyi * box[0][0] - box[1][2] + ray.c_xz > 0 ||
-          ray.ibyk * box[0][2] - box[1][0] + ray.c_zx > 0);
+  return !(ro[0] < lb[0] ||
+          ro[1] > ub[1] ||
+          ro[2] < lb[2] ||
+          ray.jbyi * lb[0] - lb[1] + ray.c_xy < 0 ||
+          ray.ibyj * ub[1] - ub[0] + ray.c_yx > 0 ||
+          ray.jbyk * lb[2] - lb[1] + ray.c_zy < 0 ||
+          ray.kbyj * ub[1] - ub[2] + ray.c_yz > 0 ||
+          ray.kbyi * lb[0] - ub[2] + ray.c_xz > 0 ||
+          ray.ibyk * lb[2] - ub[0] + ray.c_zx > 0);
 };
-tests[classify.MPP] = function testMPP(ray, box) {
+tests[classify.MPP] = function testMPP(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[0] < box[0][0] ||
-          ro[1] > box[1][1] ||
-          ro[2] > box[1][2] ||
-          ray.jbyi * box[0][0] - box[0][1] + ray.c_xy < 0 ||
-          ray.ibyj * box[1][1] - box[1][0] + ray.c_yx > 0 ||
-          ray.jbyk * box[1][2] - box[0][1] + ray.c_zy < 0 ||
-          ray.kbyj * box[1][1] - box[0][2] + ray.c_yz < 0 ||
-          ray.kbyi * box[0][0] - box[0][2] + ray.c_xz < 0 ||
-          ray.ibyk * box[1][2] - box[1][0] + ray.c_zx > 0);
+  return !(ro[0] < lb[0] ||
+          ro[1] > ub[1] ||
+          ro[2] > ub[2] ||
+          ray.jbyi * lb[0] - lb[1] + ray.c_xy < 0 ||
+          ray.ibyj * ub[1] - ub[0] + ray.c_yx > 0 ||
+          ray.jbyk * ub[2] - lb[1] + ray.c_zy < 0 ||
+          ray.kbyj * ub[1] - lb[2] + ray.c_yz < 0 ||
+          ray.kbyi * lb[0] - lb[2] + ray.c_xz < 0 ||
+          ray.ibyk * ub[2] - ub[0] + ray.c_zx > 0);
 };
-tests[classify.PMM] = function testPMM(ray, box) {
+tests[classify.PMM] = function testPMM(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[0] > box[1][0] ||
-          ro[1] < box[0][1] ||
-          ro[2] < box[0][2] ||
-          ray.jbyi * box[1][0] - box[1][1] + ray.c_xy > 0 ||
-          ray.ibyj * box[0][1] - box[0][0] + ray.c_yx < 0 ||
-          ray.jbyk * box[0][2] - box[1][1] + ray.c_zy > 0 ||
-          ray.kbyj * box[0][1] - box[1][2] + ray.c_yz > 0 ||
-          ray.kbyi * box[1][0] - box[1][2] + ray.c_xz > 0 ||
-          ray.ibyk * box[0][2] - box[0][0] + ray.c_zx < 0);
+  return !(ro[0] > ub[0] ||
+          ro[1] < lb[1] ||
+          ro[2] < lb[2] ||
+          ray.jbyi * ub[0] - ub[1] + ray.c_xy > 0 ||
+          ray.ibyj * lb[1] - lb[0] + ray.c_yx < 0 ||
+          ray.jbyk * lb[2] - ub[1] + ray.c_zy > 0 ||
+          ray.kbyj * lb[1] - ub[2] + ray.c_yz > 0 ||
+          ray.kbyi * ub[0] - ub[2] + ray.c_xz > 0 ||
+          ray.ibyk * lb[2] - lb[0] + ray.c_zx < 0);
 };
-tests[classify.PMP] = function testPMP(ray, box) {
+tests[classify.PMP] = function testPMP(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[0] > box[1][0] ||
-          ro[1] < box[0][1] ||
-          ro[2] > box[1][2] ||
-          ray.jbyi * box[1][0] - box[1][1] + ray.c_xy > 0 ||
-          ray.ibyj * box[0][1] - box[0][0] + ray.c_yx < 0 ||
-          ray.jbyk * box[1][2] - box[1][1] + ray.c_zy > 0 ||
-          ray.kbyj * box[0][1] - box[0][2] + ray.c_yz < 0 ||
-          ray.kbyi * box[1][0] - box[0][2] + ray.c_xz < 0 ||
-          ray.ibyk * box[1][2] - box[0][0] + ray.c_zx < 0);
+  return !(ro[0] > ub[0] ||
+          ro[1] < lb[1] ||
+          ro[2] > ub[2] ||
+          ray.jbyi * ub[0] - ub[1] + ray.c_xy > 0 ||
+          ray.ibyj * lb[1] - lb[0] + ray.c_yx < 0 ||
+          ray.jbyk * ub[2] - ub[1] + ray.c_zy > 0 ||
+          ray.kbyj * lb[1] - lb[2] + ray.c_yz < 0 ||
+          ray.kbyi * ub[0] - lb[2] + ray.c_xz < 0 ||
+          ray.ibyk * ub[2] - lb[0] + ray.c_zx < 0);
 };
-tests[classify.PPM] = function testPPM(ray, box) {
+tests[classify.PPM] = function testPPM(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[0] > box[1][0] ||
-          ro[1] > box[1][1] ||
-          ro[2] < box[0][2] ||
-          ray.jbyi * box[1][0] - box[0][1] + ray.c_xy < 0 ||
-          ray.ibyj * box[1][1] - box[0][0] + ray.c_yx < 0 ||
-          ray.jbyk * box[0][2] - box[0][1] + ray.c_zy < 0 ||
-          ray.kbyj * box[1][1] - box[1][2] + ray.c_yz > 0 ||
-          ray.kbyi * box[1][0] - box[1][2] + ray.c_xz > 0 ||
-          ray.ibyk * box[0][2] - box[0][0] + ray.c_zx < 0);
+  return !(ro[0] > ub[0] ||
+          ro[1] > ub[1] ||
+          ro[2] < lb[2] ||
+          ray.jbyi * ub[0] - lb[1] + ray.c_xy < 0 ||
+          ray.ibyj * ub[1] - lb[0] + ray.c_yx < 0 ||
+          ray.jbyk * lb[2] - lb[1] + ray.c_zy < 0 ||
+          ray.kbyj * ub[1] - ub[2] + ray.c_yz > 0 ||
+          ray.kbyi * ub[0] - ub[2] + ray.c_xz > 0 ||
+          ray.ibyk * lb[2] - lb[0] + ray.c_zx < 0);
 };
-tests[classify.PPP] = function testPPP(ray, box) {
+tests[classify.PPP] = function testPPP(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[0] > box[1][0] ||
-          ro[1] > box[1][1] ||
-          ro[2] > box[1][2] ||
-          ray.jbyi * box[1][0] - box[0][1] + ray.c_xy < 0 ||
-          ray.ibyj * box[1][1] - box[0][0] + ray.c_yx < 0 ||
-          ray.jbyk * box[1][2] - box[0][1] + ray.c_zy < 0 ||
-          ray.kbyj * box[1][1] - box[0][2] + ray.c_yz < 0 ||
-          ray.kbyi * box[1][0] - box[0][2] + ray.c_xz < 0 ||
-          ray.ibyk * box[1][2] - box[0][0] + ray.c_zx < 0);
+  return !(ro[0] > ub[0] ||
+          ro[1] > ub[1] ||
+          ro[2] > ub[2] ||
+          ray.jbyi * ub[0] - lb[1] + ray.c_xy < 0 ||
+          ray.ibyj * ub[1] - lb[0] + ray.c_yx < 0 ||
+          ray.jbyk * ub[2] - lb[1] + ray.c_zy < 0 ||
+          ray.kbyj * ub[1] - lb[2] + ray.c_yz < 0 ||
+          ray.kbyi * ub[0] - lb[2] + ray.c_xz < 0 ||
+          ray.ibyk * ub[2] - lb[0] + ray.c_zx < 0);
 };
-tests[classify.POO] = function testPOO(ray, box) {
+tests[classify.POO] = function testPOO(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[0] > box[1][0] ||
-          ro[1] < box[0][1] ||
-          ro[1] > box[1][1] ||
-          ro[2] < box[0][2] ||
-          ro[2] > box[1][2]);
+  return !(ro[0] > ub[0] ||
+          ro[1] < lb[1] ||
+          ro[1] > ub[1] ||
+          ro[2] < lb[2] ||
+          ro[2] > ub[2]);
 };
-tests[classify.MOO] = function testMOO(ray, box) {
+tests[classify.MOO] = function testMOO(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[0] < box[0][0] ||
-          ro[1] < box[0][1] ||
-          ro[1] > box[1][1] ||
-          ro[2] < box[0][2] ||
-          ro[2] > box[1][2]);
+  return !(ro[0] < lb[0] ||
+          ro[1] < lb[1] ||
+          ro[1] > ub[1] ||
+          ro[2] < lb[2] ||
+          ro[2] > ub[2]);
 };
-tests[classify.OPO] = function testOPO(ray, box) {
+tests[classify.OPO] = function testOPO(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[1] > box[1][1] ||
-          ro[0] < box[0][0] ||
-          ro[0] > box[1][0] ||
-          ro[2] < box[0][2] ||
-          ro[2] > box[1][2]);
+  return !(ro[1] > ub[1] ||
+          ro[0] < lb[0] ||
+          ro[0] > ub[0] ||
+          ro[2] < lb[2] ||
+          ro[2] > ub[2]);
 };
-tests[classify.OMO] = function testOMO(ray, box) {
+tests[classify.OMO] = function testOMO(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[1] < box[0][1] ||
-          ro[0] < box[0][0] ||
-          ro[0] > box[1][0] ||
-          ro[2] < box[0][2] ||
-          ro[2] > box[1][2]);
+  return !(ro[1] < lb[1] ||
+          ro[0] < lb[0] ||
+          ro[0] > ub[0] ||
+          ro[2] < lb[2] ||
+          ro[2] > ub[2]);
 };
-tests[classify.OOP] = function testOOP(ray, box) {
+tests[classify.OOP] = function testOOP(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[2] > box[1][2] ||
-          ro[0] < box[0][0] ||
-          ro[0] > box[1][0] ||
-          ro[1] < box[0][1] ||
-          ro[1] > box[1][1]);
+  return !(ro[2] > ub[2] ||
+          ro[0] < lb[0] ||
+          ro[0] > ub[0] ||
+          ro[1] < lb[1] ||
+          ro[1] > ub[1]);
 };
-tests[classify.OOM] = function testOOM(ray, box) {
+tests[classify.OOM] = function testOOM(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[2] < box[0][2] ||
-          ro[0] < box[0][0] ||
-          ro[0] > box[1][0] ||
-          ro[1] < box[0][1] ||
-          ro[1] > box[1][1]);
+  return !(ro[2] < lb[2] ||
+          ro[0] < lb[0] ||
+          ro[0] > ub[0] ||
+          ro[1] < lb[1] ||
+          ro[1] > ub[1]);
 };
-tests[classify.OMM] = function testOMM(ray, box) {
+tests[classify.OMM] = function testOMM(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[0] < box[0][0] ||
-          ro[0] > box[1][0] ||
-          ro[1] < box[0][1] ||
-          ro[2] < box[0][2] ||
-          ray.jbyk * box[0][2] - box[1][1] + ray.c_zy > 0 ||
-          ray.kbyj * box[0][1] - box[1][2] + ray.c_yz > 0);
+  return !(ro[0] < lb[0] ||
+          ro[0] > ub[0] ||
+          ro[1] < lb[1] ||
+          ro[2] < lb[2] ||
+          ray.jbyk * lb[2] - ub[1] + ray.c_zy > 0 ||
+          ray.kbyj * lb[1] - ub[2] + ray.c_yz > 0);
 };
-tests[classify.OMP] = function testOMP(ray, box) {
+tests[classify.OMP] = function testOMP(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[0] < box[0][0] ||
-          ro[0] > box[1][0] ||
-          ro[1] < box[0][1] ||
-          ro[2] > box[1][2] ||
-          ray.jbyk * box[1][2] - box[1][1] + ray.c_zy > 0 ||
-          ray.kbyj * box[0][1] - box[0][2] + ray.c_yz < 0);
+  return !(ro[0] < lb[0] ||
+          ro[0] > ub[0] ||
+          ro[1] < lb[1] ||
+          ro[2] > ub[2] ||
+          ray.jbyk * ub[2] - ub[1] + ray.c_zy > 0 ||
+          ray.kbyj * lb[1] - lb[2] + ray.c_yz < 0);
 };
-tests[classify.OPM] = function testOPM(ray, box) {
+tests[classify.OPM] = function testOPM(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[0] < box[0][0] ||
-          ro[0] > box[1][0] ||
-          ro[1] > box[1][1] ||
-          ro[2] < box[0][2] ||
-          ray.jbyk * box[0][2] - box[0][1] + ray.c_zy < 0 ||
-          ray.kbyj * box[1][1] - box[1][2] + ray.c_yz > 0);
+  return !(ro[0] < lb[0] ||
+          ro[0] > ub[0] ||
+          ro[1] > ub[1] ||
+          ro[2] < lb[2] ||
+          ray.jbyk * lb[2] - lb[1] + ray.c_zy < 0 ||
+          ray.kbyj * ub[1] - ub[2] + ray.c_yz > 0);
 };
-tests[classify.OPP] = function testOPP(ray, box) {
+tests[classify.OPP] = function testOPP(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[0] < box[0][0] ||
-          ro[0] > box[1][0] ||
-          ro[1] > box[1][1] ||
-          ro[2] > box[1][2] ||
-          ray.jbyk * box[1][2] - box[0][1] + ray.c_zy < 0 ||
-          ray.kbyj * box[1][1] - box[0][2] + ray.c_yz < 0);
+  return !(ro[0] < lb[0] ||
+          ro[0] > ub[0] ||
+          ro[1] > ub[1] ||
+          ro[2] > ub[2] ||
+          ray.jbyk * ub[2] - lb[1] + ray.c_zy < 0 ||
+          ray.kbyj * ub[1] - lb[2] + ray.c_yz < 0);
 };
-tests[classify.MOM] = function testMOM(ray, box) {
+tests[classify.MOM] = function testMOM(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[1] < box[0][1] ||
-          ro[1] > box[1][1] ||
-          ro[0] < box[0][0] ||
-          ro[2] < box[0][2] ||
-          ray.kbyi * box[0][0] - box[1][2] + ray.c_xz > 0 ||
-          ray.ibyk * box[0][2] - box[1][0] + ray.c_zx > 0);
+  return !(ro[1] < lb[1] ||
+          ro[1] > ub[1] ||
+          ro[0] < lb[0] ||
+          ro[2] < lb[2] ||
+          ray.kbyi * lb[0] - ub[2] + ray.c_xz > 0 ||
+          ray.ibyk * lb[2] - ub[0] + ray.c_zx > 0);
 };
-tests[classify.MOP] = function testMOP(ray, box) {
+tests[classify.MOP] = function testMOP(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[1] < box[0][1] ||
-          ro[1] > box[1][1] ||
-          ro[0] < box[0][0] ||
-          ro[2] > box[1][2] ||
-          ray.kbyi * box[0][0] - box[0][2] + ray.c_xz < 0 ||
-          ray.ibyk * box[1][2] - box[1][0] + ray.c_zx > 0);
+  return !(ro[1] < lb[1] ||
+          ro[1] > ub[1] ||
+          ro[0] < lb[0] ||
+          ro[2] > ub[2] ||
+          ray.kbyi * lb[0] - lb[2] + ray.c_xz < 0 ||
+          ray.ibyk * ub[2] - ub[0] + ray.c_zx > 0);
 };
-tests[classify.POM] = function testPOM(ray, box) {
+tests[classify.POM] = function testPOM(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[1] < box[0][1] ||
-          ro[1] > box[1][1] ||
-          ro[0] > box[1][0] ||
-          ro[2] < box[0][2] ||
-          ray.kbyi * box[1][0] - box[1][2] + ray.c_xz > 0 ||
-          ray.ibyk * box[0][2] - box[0][0] + ray.c_zx < 0);
+  return !(ro[1] < lb[1] ||
+          ro[1] > ub[1] ||
+          ro[0] > ub[0] ||
+          ro[2] < lb[2] ||
+          ray.kbyi * ub[0] - ub[2] + ray.c_xz > 0 ||
+          ray.ibyk * lb[2] - lb[0] + ray.c_zx < 0);
 };
-tests[classify.POP] = function testPOP(ray, box) {
+tests[classify.POP] = function testPOP(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[1] < box[0][1] ||
-          ro[1] > box[1][1] ||
-          ro[0] > box[1][0] ||
-          ro[2] > box[1][2] ||
-          ray.kbyi * box[1][0] - box[0][2] + ray.c_xz < 0 ||
-          ray.ibyk * box[1][2] - box[0][0] + ray.c_zx < 0);
+  return !(ro[1] < lb[1] ||
+          ro[1] > ub[1] ||
+          ro[0] > ub[0] ||
+          ro[2] > ub[2] ||
+          ray.kbyi * ub[0] - lb[2] + ray.c_xz < 0 ||
+          ray.ibyk * ub[2] - lb[0] + ray.c_zx < 0);
 };
-tests[classify.MMO] = function testMMO(ray, box) {
+tests[classify.MMO] = function testMMO(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[2] < box[0][2] ||
-          ro[2] > box[1][2] ||
-          ro[0] < box[0][0] ||
-          ro[1] < box[0][1] ||
-          ray.jbyi * box[0][0] - box[1][1] + ray.c_xy > 0 ||
-          ray.ibyj * box[0][1] - box[1][0] + ray.c_yx > 0);
+  return !(ro[2] < lb[2] ||
+          ro[2] > ub[2] ||
+          ro[0] < lb[0] ||
+          ro[1] < lb[1] ||
+          ray.jbyi * lb[0] - ub[1] + ray.c_xy > 0 ||
+          ray.ibyj * lb[1] - ub[0] + ray.c_yx > 0);
 };
-tests[classify.MPO] = function testMPO(ray, box) {
+tests[classify.MPO] = function testMPO(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[2] < box[0][2] ||
-          ro[2] > box[1][2] ||
-          ro[0] < box[0][0] ||
-          ro[1] > box[1][1] ||
-          ray.jbyi * box[0][0] - box[0][1] + ray.c_xy < 0 ||
-          ray.ibyj * box[1][1] - box[1][0] + ray.c_yx > 0);
+  return !(ro[2] < lb[2] ||
+          ro[2] > ub[2] ||
+          ro[0] < lb[0] ||
+          ro[1] > ub[1] ||
+          ray.jbyi * lb[0] - lb[1] + ray.c_xy < 0 ||
+          ray.ibyj * ub[1] - ub[0] + ray.c_yx > 0);
 };
-tests[classify.PMO] = function testPMO(ray, box) {
+tests[classify.PMO] = function testPMO(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[2] < box[0][2] ||
-          ro[2] > box[1][2] ||
-          ro[0] > box[1][0] ||
-          ro[1] < box[0][1] ||
-          ray.jbyi * box[1][0] - box[1][1] + ray.c_xy > 0 ||
-          ray.ibyj * box[0][1] - box[0][0] + ray.c_yx < 0);
+  return !(ro[2] < lb[2] ||
+          ro[2] > ub[2] ||
+          ro[0] > ub[0] ||
+          ro[1] < lb[1] ||
+          ray.jbyi * ub[0] - ub[1] + ray.c_xy > 0 ||
+          ray.ibyj * lb[1] - lb[0] + ray.c_yx < 0);
 };
-tests[classify.PPO] = function testPPO(ray, box) {
+tests[classify.PPO] = function testPPO(ray, lb, ub) {
   var ro = ray.ro;
 
-  return !(ro[2] < box[0][2] ||
-          ro[2] > box[1][2] ||
-          ro[0] > box[1][0] ||
-          ro[1] > box[1][1] ||
-          ray.jbyi * box[1][0] - box[0][1] + ray.c_xy < 0 ||
-          ray.ibyj * box[1][1] - box[0][0] + ray.c_yx < 0);
+  return !(ro[2] < lb[2] ||
+          ro[2] > ub[2] ||
+          ro[0] > ub[0] ||
+          ro[1] > ub[1] ||
+          ray.jbyi * ub[0] - lb[1] + ray.c_xy < 0 ||
+          ray.ibyj * ub[1] - lb[0] + ray.c_yx < 0);
 };
 
 var lerps = {};
@@ -641,7 +641,7 @@ var scratchNormal = [0, 0, 0];
 Ray.prototype.intersects =  function rayIntersectsAABB(aabb, computeDistance) {
   var classification = this.classification;
   var t = tests[classification];
-  if (t && t(this, aabb)) {
+  if (t && t(this, aabb[0], aabb[1])) {
     if (!computeDistance) {
       return true;
     }
