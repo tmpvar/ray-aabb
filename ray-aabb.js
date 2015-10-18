@@ -12,12 +12,12 @@ tests[classify.MMM] = function testMMM(ray, lb, ub) {
   return !(ro[0] < lb[0] ||
           ro[1] < lb[1] ||
           ro[2] < lb[2] ||
-          ray.jbyi * lb[0] - ub[1] + ray.c_xy > 0 ||
-          ray.ibyj * lb[1] - ub[0] + ray.c_yx > 0 ||
-          ray.jbyk * lb[2] - ub[1] + ray.c_zy > 0 ||
-          ray.kbyj * lb[1] - ub[2] + ray.c_yz > 0 ||
-          ray.kbyi * lb[0] - ub[2] + ray.c_xz > 0 ||
-          ray.ibyk * lb[2] - ub[0] + ray.c_zx > 0);
+          ray.jbyi * lb[0] - ub[1] + ray.cxy > 0 ||
+          ray.ibyj * lb[1] - ub[0] + ray.cyx > 0 ||
+          ray.jbyk * lb[2] - ub[1] + ray.czy > 0 ||
+          ray.kbyj * lb[1] - ub[2] + ray.cyz > 0 ||
+          ray.kbyi * lb[0] - ub[2] + ray.cxz > 0 ||
+          ray.ibyk * lb[2] - ub[0] + ray.czx > 0);
 };
 tests[classify.MMP] = function testMMP(ray, lb, ub) {
   var ro = ray.ro;
@@ -25,12 +25,12 @@ tests[classify.MMP] = function testMMP(ray, lb, ub) {
   return !(ro[0] < lb[0] ||
           ro[1] < lb[1] ||
           ro[2] > ub[2] ||
-          ray.jbyi * lb[0] - ub[1] + ray.c_xy > 0 ||
-          ray.ibyj * lb[1] - ub[0] + ray.c_yx > 0 ||
-          ray.jbyk * ub[2] - ub[1] + ray.c_zy > 0 ||
-          ray.kbyj * lb[1] - lb[2] + ray.c_yz < 0 ||
-          ray.kbyi * lb[0] - lb[2] + ray.c_xz < 0 ||
-          ray.ibyk * ub[2] - ub[0] + ray.c_zx > 0);
+          ray.jbyi * lb[0] - ub[1] + ray.cxy > 0 ||
+          ray.ibyj * lb[1] - ub[0] + ray.cyx > 0 ||
+          ray.jbyk * ub[2] - ub[1] + ray.czy > 0 ||
+          ray.kbyj * lb[1] - lb[2] + ray.cyz < 0 ||
+          ray.kbyi * lb[0] - lb[2] + ray.cxz < 0 ||
+          ray.ibyk * ub[2] - ub[0] + ray.czx > 0);
 };
 tests[classify.MPM] = function testMPM(ray, lb, ub) {
   var ro = ray.ro;
@@ -38,12 +38,12 @@ tests[classify.MPM] = function testMPM(ray, lb, ub) {
   return !(ro[0] < lb[0] ||
           ro[1] > ub[1] ||
           ro[2] < lb[2] ||
-          ray.jbyi * lb[0] - lb[1] + ray.c_xy < 0 ||
-          ray.ibyj * ub[1] - ub[0] + ray.c_yx > 0 ||
-          ray.jbyk * lb[2] - lb[1] + ray.c_zy < 0 ||
-          ray.kbyj * ub[1] - ub[2] + ray.c_yz > 0 ||
-          ray.kbyi * lb[0] - ub[2] + ray.c_xz > 0 ||
-          ray.ibyk * lb[2] - ub[0] + ray.c_zx > 0);
+          ray.jbyi * lb[0] - lb[1] + ray.cxy < 0 ||
+          ray.ibyj * ub[1] - ub[0] + ray.cyx > 0 ||
+          ray.jbyk * lb[2] - lb[1] + ray.czy < 0 ||
+          ray.kbyj * ub[1] - ub[2] + ray.cyz > 0 ||
+          ray.kbyi * lb[0] - ub[2] + ray.cxz > 0 ||
+          ray.ibyk * lb[2] - ub[0] + ray.czx > 0);
 };
 tests[classify.MPP] = function testMPP(ray, lb, ub) {
   var ro = ray.ro;
@@ -51,12 +51,12 @@ tests[classify.MPP] = function testMPP(ray, lb, ub) {
   return !(ro[0] < lb[0] ||
           ro[1] > ub[1] ||
           ro[2] > ub[2] ||
-          ray.jbyi * lb[0] - lb[1] + ray.c_xy < 0 ||
-          ray.ibyj * ub[1] - ub[0] + ray.c_yx > 0 ||
-          ray.jbyk * ub[2] - lb[1] + ray.c_zy < 0 ||
-          ray.kbyj * ub[1] - lb[2] + ray.c_yz < 0 ||
-          ray.kbyi * lb[0] - lb[2] + ray.c_xz < 0 ||
-          ray.ibyk * ub[2] - ub[0] + ray.c_zx > 0);
+          ray.jbyi * lb[0] - lb[1] + ray.cxy < 0 ||
+          ray.ibyj * ub[1] - ub[0] + ray.cyx > 0 ||
+          ray.jbyk * ub[2] - lb[1] + ray.czy < 0 ||
+          ray.kbyj * ub[1] - lb[2] + ray.cyz < 0 ||
+          ray.kbyi * lb[0] - lb[2] + ray.cxz < 0 ||
+          ray.ibyk * ub[2] - ub[0] + ray.czx > 0);
 };
 tests[classify.PMM] = function testPMM(ray, lb, ub) {
   var ro = ray.ro;
@@ -64,12 +64,12 @@ tests[classify.PMM] = function testPMM(ray, lb, ub) {
   return !(ro[0] > ub[0] ||
           ro[1] < lb[1] ||
           ro[2] < lb[2] ||
-          ray.jbyi * ub[0] - ub[1] + ray.c_xy > 0 ||
-          ray.ibyj * lb[1] - lb[0] + ray.c_yx < 0 ||
-          ray.jbyk * lb[2] - ub[1] + ray.c_zy > 0 ||
-          ray.kbyj * lb[1] - ub[2] + ray.c_yz > 0 ||
-          ray.kbyi * ub[0] - ub[2] + ray.c_xz > 0 ||
-          ray.ibyk * lb[2] - lb[0] + ray.c_zx < 0);
+          ray.jbyi * ub[0] - ub[1] + ray.cxy > 0 ||
+          ray.ibyj * lb[1] - lb[0] + ray.cyx < 0 ||
+          ray.jbyk * lb[2] - ub[1] + ray.czy > 0 ||
+          ray.kbyj * lb[1] - ub[2] + ray.cyz > 0 ||
+          ray.kbyi * ub[0] - ub[2] + ray.cxz > 0 ||
+          ray.ibyk * lb[2] - lb[0] + ray.czx < 0);
 };
 tests[classify.PMP] = function testPMP(ray, lb, ub) {
   var ro = ray.ro;
@@ -77,12 +77,12 @@ tests[classify.PMP] = function testPMP(ray, lb, ub) {
   return !(ro[0] > ub[0] ||
           ro[1] < lb[1] ||
           ro[2] > ub[2] ||
-          ray.jbyi * ub[0] - ub[1] + ray.c_xy > 0 ||
-          ray.ibyj * lb[1] - lb[0] + ray.c_yx < 0 ||
-          ray.jbyk * ub[2] - ub[1] + ray.c_zy > 0 ||
-          ray.kbyj * lb[1] - lb[2] + ray.c_yz < 0 ||
-          ray.kbyi * ub[0] - lb[2] + ray.c_xz < 0 ||
-          ray.ibyk * ub[2] - lb[0] + ray.c_zx < 0);
+          ray.jbyi * ub[0] - ub[1] + ray.cxy > 0 ||
+          ray.ibyj * lb[1] - lb[0] + ray.cyx < 0 ||
+          ray.jbyk * ub[2] - ub[1] + ray.czy > 0 ||
+          ray.kbyj * lb[1] - lb[2] + ray.cyz < 0 ||
+          ray.kbyi * ub[0] - lb[2] + ray.cxz < 0 ||
+          ray.ibyk * ub[2] - lb[0] + ray.czx < 0);
 };
 tests[classify.PPM] = function testPPM(ray, lb, ub) {
   var ro = ray.ro;
@@ -90,12 +90,12 @@ tests[classify.PPM] = function testPPM(ray, lb, ub) {
   return !(ro[0] > ub[0] ||
           ro[1] > ub[1] ||
           ro[2] < lb[2] ||
-          ray.jbyi * ub[0] - lb[1] + ray.c_xy < 0 ||
-          ray.ibyj * ub[1] - lb[0] + ray.c_yx < 0 ||
-          ray.jbyk * lb[2] - lb[1] + ray.c_zy < 0 ||
-          ray.kbyj * ub[1] - ub[2] + ray.c_yz > 0 ||
-          ray.kbyi * ub[0] - ub[2] + ray.c_xz > 0 ||
-          ray.ibyk * lb[2] - lb[0] + ray.c_zx < 0);
+          ray.jbyi * ub[0] - lb[1] + ray.cxy < 0 ||
+          ray.ibyj * ub[1] - lb[0] + ray.cyx < 0 ||
+          ray.jbyk * lb[2] - lb[1] + ray.czy < 0 ||
+          ray.kbyj * ub[1] - ub[2] + ray.cyz > 0 ||
+          ray.kbyi * ub[0] - ub[2] + ray.cxz > 0 ||
+          ray.ibyk * lb[2] - lb[0] + ray.czx < 0);
 };
 tests[classify.PPP] = function testPPP(ray, lb, ub) {
   var ro = ray.ro;
@@ -103,21 +103,23 @@ tests[classify.PPP] = function testPPP(ray, lb, ub) {
   return !(ro[0] > ub[0] ||
           ro[1] > ub[1] ||
           ro[2] > ub[2] ||
-          ray.jbyi * ub[0] - lb[1] + ray.c_xy < 0 ||
-          ray.ibyj * ub[1] - lb[0] + ray.c_yx < 0 ||
-          ray.jbyk * ub[2] - lb[1] + ray.c_zy < 0 ||
-          ray.kbyj * ub[1] - lb[2] + ray.c_yz < 0 ||
-          ray.kbyi * ub[0] - lb[2] + ray.c_xz < 0 ||
-          ray.ibyk * ub[2] - lb[0] + ray.c_zx < 0);
+          ray.jbyi * ub[0] - lb[1] + ray.cxy < 0 ||
+          ray.ibyj * ub[1] - lb[0] + ray.cyx < 0 ||
+          ray.jbyk * ub[2] - lb[1] + ray.czy < 0 ||
+          ray.kbyj * ub[1] - lb[2] + ray.cyz < 0 ||
+          ray.kbyi * ub[0] - lb[2] + ray.cxz < 0 ||
+          ray.ibyk * ub[2] - lb[0] + ray.czx < 0);
 };
 tests[classify.POO] = function testPOO(ray, lb, ub) {
   var ro = ray.ro;
+  var ro1 = ro[1];
+  var ro2 = ro[2];
 
   return !(ro[0] > ub[0] ||
-          ro[1] < lb[1] ||
-          ro[1] > ub[1] ||
-          ro[2] < lb[2] ||
-          ro[2] > ub[2]);
+          ro1 < lb[1] ||
+          ro1 > ub[1] ||
+          ro2 < lb[2] ||
+          ro2 > ub[2]);
 };
 tests[classify.MOO] = function testMOO(ray, lb, ub) {
   var ro = ray.ro;
@@ -171,8 +173,8 @@ tests[classify.OMM] = function testOMM(ray, lb, ub) {
           ro[0] > ub[0] ||
           ro[1] < lb[1] ||
           ro[2] < lb[2] ||
-          ray.jbyk * lb[2] - ub[1] + ray.c_zy > 0 ||
-          ray.kbyj * lb[1] - ub[2] + ray.c_yz > 0);
+          ray.jbyk * lb[2] - ub[1] + ray.czy > 0 ||
+          ray.kbyj * lb[1] - ub[2] + ray.cyz > 0);
 };
 tests[classify.OMP] = function testOMP(ray, lb, ub) {
   var ro = ray.ro;
@@ -181,8 +183,8 @@ tests[classify.OMP] = function testOMP(ray, lb, ub) {
           ro[0] > ub[0] ||
           ro[1] < lb[1] ||
           ro[2] > ub[2] ||
-          ray.jbyk * ub[2] - ub[1] + ray.c_zy > 0 ||
-          ray.kbyj * lb[1] - lb[2] + ray.c_yz < 0);
+          ray.jbyk * ub[2] - ub[1] + ray.czy > 0 ||
+          ray.kbyj * lb[1] - lb[2] + ray.cyz < 0);
 };
 tests[classify.OPM] = function testOPM(ray, lb, ub) {
   var ro = ray.ro;
@@ -191,8 +193,8 @@ tests[classify.OPM] = function testOPM(ray, lb, ub) {
           ro[0] > ub[0] ||
           ro[1] > ub[1] ||
           ro[2] < lb[2] ||
-          ray.jbyk * lb[2] - lb[1] + ray.c_zy < 0 ||
-          ray.kbyj * ub[1] - ub[2] + ray.c_yz > 0);
+          ray.jbyk * lb[2] - lb[1] + ray.czy < 0 ||
+          ray.kbyj * ub[1] - ub[2] + ray.cyz > 0);
 };
 tests[classify.OPP] = function testOPP(ray, lb, ub) {
   var ro = ray.ro;
@@ -201,8 +203,8 @@ tests[classify.OPP] = function testOPP(ray, lb, ub) {
           ro[0] > ub[0] ||
           ro[1] > ub[1] ||
           ro[2] > ub[2] ||
-          ray.jbyk * ub[2] - lb[1] + ray.c_zy < 0 ||
-          ray.kbyj * ub[1] - lb[2] + ray.c_yz < 0);
+          ray.jbyk * ub[2] - lb[1] + ray.czy < 0 ||
+          ray.kbyj * ub[1] - lb[2] + ray.cyz < 0);
 };
 tests[classify.MOM] = function testMOM(ray, lb, ub) {
   var ro = ray.ro;
@@ -211,8 +213,8 @@ tests[classify.MOM] = function testMOM(ray, lb, ub) {
           ro[1] > ub[1] ||
           ro[0] < lb[0] ||
           ro[2] < lb[2] ||
-          ray.kbyi * lb[0] - ub[2] + ray.c_xz > 0 ||
-          ray.ibyk * lb[2] - ub[0] + ray.c_zx > 0);
+          ray.kbyi * lb[0] - ub[2] + ray.cxz > 0 ||
+          ray.ibyk * lb[2] - ub[0] + ray.czx > 0);
 };
 tests[classify.MOP] = function testMOP(ray, lb, ub) {
   var ro = ray.ro;
@@ -221,8 +223,8 @@ tests[classify.MOP] = function testMOP(ray, lb, ub) {
           ro[1] > ub[1] ||
           ro[0] < lb[0] ||
           ro[2] > ub[2] ||
-          ray.kbyi * lb[0] - lb[2] + ray.c_xz < 0 ||
-          ray.ibyk * ub[2] - ub[0] + ray.c_zx > 0);
+          ray.kbyi * lb[0] - lb[2] + ray.cxz < 0 ||
+          ray.ibyk * ub[2] - ub[0] + ray.czx > 0);
 };
 tests[classify.POM] = function testPOM(ray, lb, ub) {
   var ro = ray.ro;
@@ -231,8 +233,8 @@ tests[classify.POM] = function testPOM(ray, lb, ub) {
           ro[1] > ub[1] ||
           ro[0] > ub[0] ||
           ro[2] < lb[2] ||
-          ray.kbyi * ub[0] - ub[2] + ray.c_xz > 0 ||
-          ray.ibyk * lb[2] - lb[0] + ray.c_zx < 0);
+          ray.kbyi * ub[0] - ub[2] + ray.cxz > 0 ||
+          ray.ibyk * lb[2] - lb[0] + ray.czx < 0);
 };
 tests[classify.POP] = function testPOP(ray, lb, ub) {
   var ro = ray.ro;
@@ -241,8 +243,8 @@ tests[classify.POP] = function testPOP(ray, lb, ub) {
           ro[1] > ub[1] ||
           ro[0] > ub[0] ||
           ro[2] > ub[2] ||
-          ray.kbyi * ub[0] - lb[2] + ray.c_xz < 0 ||
-          ray.ibyk * ub[2] - lb[0] + ray.c_zx < 0);
+          ray.kbyi * ub[0] - lb[2] + ray.cxz < 0 ||
+          ray.ibyk * ub[2] - lb[0] + ray.czx < 0);
 };
 tests[classify.MMO] = function testMMO(ray, lb, ub) {
   var ro = ray.ro;
@@ -251,8 +253,8 @@ tests[classify.MMO] = function testMMO(ray, lb, ub) {
           ro[2] > ub[2] ||
           ro[0] < lb[0] ||
           ro[1] < lb[1] ||
-          ray.jbyi * lb[0] - ub[1] + ray.c_xy > 0 ||
-          ray.ibyj * lb[1] - ub[0] + ray.c_yx > 0);
+          ray.jbyi * lb[0] - ub[1] + ray.cxy > 0 ||
+          ray.ibyj * lb[1] - ub[0] + ray.cyx > 0);
 };
 tests[classify.MPO] = function testMPO(ray, lb, ub) {
   var ro = ray.ro;
@@ -261,8 +263,8 @@ tests[classify.MPO] = function testMPO(ray, lb, ub) {
           ro[2] > ub[2] ||
           ro[0] < lb[0] ||
           ro[1] > ub[1] ||
-          ray.jbyi * lb[0] - lb[1] + ray.c_xy < 0 ||
-          ray.ibyj * ub[1] - ub[0] + ray.c_yx > 0);
+          ray.jbyi * lb[0] - lb[1] + ray.cxy < 0 ||
+          ray.ibyj * ub[1] - ub[0] + ray.cyx > 0);
 };
 tests[classify.PMO] = function testPMO(ray, lb, ub) {
   var ro = ray.ro;
@@ -271,8 +273,8 @@ tests[classify.PMO] = function testPMO(ray, lb, ub) {
           ro[2] > ub[2] ||
           ro[0] > ub[0] ||
           ro[1] < lb[1] ||
-          ray.jbyi * ub[0] - ub[1] + ray.c_xy > 0 ||
-          ray.ibyj * lb[1] - lb[0] + ray.c_yx < 0);
+          ray.jbyi * ub[0] - ub[1] + ray.cxy > 0 ||
+          ray.ibyj * lb[1] - lb[0] + ray.cyx < 0);
 };
 tests[classify.PPO] = function testPPO(ray, lb, ub) {
   var ro = ray.ro;
@@ -281,8 +283,8 @@ tests[classify.PPO] = function testPPO(ray, lb, ub) {
           ro[2] > ub[2] ||
           ro[0] > ub[0] ||
           ro[1] > ub[1] ||
-          ray.jbyi * ub[0] - lb[1] + ray.c_xy < 0 ||
-          ray.ibyj * ub[1] - lb[0] + ray.c_yx < 0);
+          ray.jbyi * ub[0] - lb[1] + ray.cxy < 0 ||
+          ray.ibyj * ub[1] - lb[0] + ray.cyx < 0);
 };
 
 var lerps = {};
@@ -333,7 +335,7 @@ lerps[classify.MPM] = function lerpMPM(ray, aabb, norm) {
   return max(a, b, c);
 };
 
-lerps[classify.MPP] = function(ray, aabb, norm) {
+lerps[classify.MPP] = function lerpMPP(ray, aabb, norm) {
   var ro = ray.ro;
   var ub = aabb[1];
   var lb = aabb[0];
@@ -349,7 +351,7 @@ lerps[classify.MPP] = function(ray, aabb, norm) {
   return max(a, b, c);
 };
 
-lerps[classify.PMM] = function(ray, aabb, norm) {
+lerps[classify.PMM] = function lerpPMM(ray, aabb, norm) {
   var ro = ray.ro;
   var ub = aabb[1];
   var lb = aabb[0];
@@ -365,7 +367,7 @@ lerps[classify.PMM] = function(ray, aabb, norm) {
   return max(a, b, c);
 };
 
-lerps[classify.PMP] = function(ray, aabb, norm) {
+lerps[classify.PMP] = function lerpPMP(ray, aabb, norm) {
   var ro = ray.ro;
   var ub = aabb[1];
   var lb = aabb[0];
@@ -381,7 +383,7 @@ lerps[classify.PMP] = function(ray, aabb, norm) {
   return max(a, b, c);
 };
 
-lerps[classify.PPM] = function(ray, aabb, norm) {
+lerps[classify.PPM] = function lerpPPM(ray, aabb, norm) {
   var ro = ray.ro;
   var lb = aabb[0];
   var ub = aabb[1];
@@ -397,7 +399,7 @@ lerps[classify.PPM] = function(ray, aabb, norm) {
   return max(a, b, c);
 };
 
-lerps[classify.PPP] = function(ray, aabb, norm) {
+lerps[classify.PPP] = function lerpPPP(ray, aabb, norm) {
   var ro = ray.ro;
   var lb = aabb[0];
 
@@ -412,7 +414,7 @@ lerps[classify.PPP] = function(ray, aabb, norm) {
   return max(a, b, c);
 };
 
-lerps[classify.OMM] = function(ray, aabb, norm) {
+lerps[classify.OMM] = function lerpOMM(ray, aabb, norm) {
   var ro = ray.ro;
   var ub = aabb[1];
 
@@ -426,7 +428,7 @@ lerps[classify.OMM] = function(ray, aabb, norm) {
   return max(a, b);
 };
 
-lerps[classify.OMP] = function(ray, aabb, norm) {
+lerps[classify.OMP] = function lerpOMP(ray, aabb, norm) {
   var ro = ray.ro;
 
   var a = (aabb[1][1] - ro[1]) * ray.ij;
@@ -439,7 +441,7 @@ lerps[classify.OMP] = function(ray, aabb, norm) {
   return max(a, b);
 };
 
-lerps[classify.OPM] = function(ray, aabb, norm) {
+lerps[classify.OPM] = function lerpOPM(ray, aabb, norm) {
   var ro = ray.ro;
 
   var a = (aabb[0][1] - ro[1]) * ray.ij;
@@ -452,7 +454,7 @@ lerps[classify.OPM] = function(ray, aabb, norm) {
   return max(a, b);
 };
 
-lerps[classify.OPP] = function(ray, aabb, norm) {
+lerps[classify.OPP] = function lerpOPP(ray, aabb, norm) {
   var ro = ray.ro;
   var lb = aabb[0];
 
@@ -466,7 +468,7 @@ lerps[classify.OPP] = function(ray, aabb, norm) {
   return max(a, b);
 }
 
-lerps[classify.MOM] = function(ray, aabb, norm) {
+lerps[classify.MOM] = function lerpMOM(ray, aabb, norm) {
   var ro = ray.ro;
   var ub = aabb[1];
 
@@ -480,7 +482,7 @@ lerps[classify.MOM] = function(ray, aabb, norm) {
   return max(a, b);
 };
 
-lerps[classify.MOP] = function(ray, aabb, norm) {
+lerps[classify.MOP] = function lerpMOP(ray, aabb, norm) {
   var ro = ray.ro;
 
   var a = (aabb[1][0] - ro[0]) * ray.ii;
@@ -493,7 +495,7 @@ lerps[classify.MOP] = function(ray, aabb, norm) {
   return max(a, b);
 };
 
-lerps[classify.POM] = function(ray, aabb, norm) {
+lerps[classify.POM] = function lerpPOM(ray, aabb, norm) {
   var ro = ray.ro;
 
   var a = (aabb[0][0] - ray.ro[0]) * ray.ii;
@@ -506,7 +508,7 @@ lerps[classify.POM] = function(ray, aabb, norm) {
   return max(a, b);
 };
 
-lerps[classify.POP] = function(ray, aabb, norm) {
+lerps[classify.POP] = function lerpPOP(ray, aabb, norm) {
   var ro = ray.ro;
   var lb = aabb[0];
 
@@ -520,7 +522,7 @@ lerps[classify.POP] = function(ray, aabb, norm) {
   return max(a, b);
 }
 
-lerps[classify.MMO] = function(ray, aabb, norm) {
+lerps[classify.MMO] = function lerpMMO(ray, aabb, norm) {
   var ro = ray.ro;
   var ub = aabb[1];
 
@@ -534,7 +536,7 @@ lerps[classify.MMO] = function(ray, aabb, norm) {
   return max(a, b);
 }
 
-lerps[classify.MPO] = function(ray, aabb, norm) {
+lerps[classify.MPO] = function lerpMPO(ray, aabb, norm) {
   var ro = ray.ro;
 
   var a = (aabb[1][0] - ro[0]) * ray.ii;
@@ -547,7 +549,7 @@ lerps[classify.MPO] = function(ray, aabb, norm) {
   return max(a, b);
 };
 
-lerps[classify.PMO] = function(ray, aabb, norm) {
+lerps[classify.PMO] = function lerpPMO(ray, aabb, norm) {
   var ro = ray.ro;
 
   var a = (aabb[0][0] - ro[0]) * ray.ii;
@@ -560,7 +562,7 @@ lerps[classify.PMO] = function(ray, aabb, norm) {
   return max(a, b);
 };
 
-lerps[classify.PPO] = function(ray, aabb, norm) {
+lerps[classify.PPO] = function lerpPPO(ray, aabb, norm) {
   var ro = ray.ro;
   var lb = aabb[0];
 
@@ -574,39 +576,39 @@ lerps[classify.PPO] = function(ray, aabb, norm) {
   return max(a, b);
 };
 
-lerps[classify.MOO] = function(ray, aabb, norm) {
+lerps[classify.MOO] = function lerpMOO(ray, aabb, norm) {
   norm[0] = 1;
   norm[1] = norm[2] = 0;
   return (aabb[1][0] - ray.ro[0]) * ray.ii;
 };
 
-lerps[classify.POO] = function(ray, aabb, norm) {
+lerps[classify.POO] = function lerpPOO(ray, aabb, norm) {
   norm[0] = -1;
   norm[1] = norm[2] = 0;
   return (aabb[0][0] - ray.ro[0]) * ray.ii;
 };
 
-lerps[classify.OMO] = function(ray, aabb, norm) {
+lerps[classify.OMO] = function lerpOMO(ray, aabb, norm) {
   norm[0] = 0;
   norm[1] = 1;
   norm[2] = 0;
   return (aabb[1][1] - ray.ro[1]) * ray.ij;
 };
 
-lerps[classify.OPO] = function(ray, aabb, norm) {
+lerps[classify.OPO] = function lerpOPO(ray, aabb, norm) {
   norm[0] = 0;
   norm[1] = -1;
   norm[2] = 0;
   return (aabb[0][1] - ray.ro[1]) * ray.ij;
 };
 
-lerps[classify.OOM] = function(ray, aabb, norm) {
+lerps[classify.OOM] = function lerpOOM(ray, aabb, norm) {
   norm[0] = norm[1] = 0;
   norm[2] = 1;
   return (aabb[1][2] - ray.ro[2]) * ray.ik;
 };
 
-lerps[classify.OOP] = function(ray, aabb, norm) {
+lerps[classify.OOP] = function lerpOOP(ray, aabb, norm) {
   norm[0] = norm[1] = 0;
   norm[2] = -1;
   return (aabb[0][2] - ray.ro[2]) * ray.ik;
@@ -627,12 +629,12 @@ Ray.prototype.jbyk = 0.0;
 Ray.prototype.kbyj = 0.0;
 Ray.prototype.ibyk = 0.0;
 Ray.prototype.kbyi = 0.0;
-Ray.prototype.c_xy = 0.0;
-Ray.prototype.c_xz = 0.0;
-Ray.prototype.c_yx = 0.0;
-Ray.prototype.c_yz = 0.0;
-Ray.prototype.c_zx = 0.0;
-Ray.prototype.c_zy = 0.0;
+Ray.prototype.cxy = 0.0;
+Ray.prototype.cxz = 0.0;
+Ray.prototype.cyx = 0.0;
+Ray.prototype.cyz = 0.0;
+Ray.prototype.czx = 0.0;
+Ray.prototype.czy = 0.0;
 Ray.prototype.classification = 0.0;
 Ray.prototype.result = null;
 
@@ -655,8 +657,10 @@ Ray.prototype.intersects =  function rayIntersectsAABB(aabb, computeDistance) {
 
 Ray.prototype.update = function updateRay(ro, rd) {
   var r = this;
-  var i = r.rd[0] = rd[0], j = r.rd[1] = rd[1], k = r.rd[2] = rd[2];
-  var x = r.ro[0] = ro[0], y = r.ro[1] = ro[1], z = r.ro[2] = ro[2];
+  r.ro = ro;
+  r.rd = rd;
+  var i = rd[0], j = rd[1], k = rd[2];
+  var x = ro[0], y = ro[1], z = ro[2];
 
   r.ii = (i)?1.0/i:0;
   r.ij = (j)?1.0/j:0;
@@ -668,12 +672,12 @@ Ray.prototype.update = function updateRay(ro, rd) {
   r.kbyj = k * r.ij;
   r.ibyk = i * r.ik;
   r.kbyi = k * r.ii;
-  r.c_xy = y - r.jbyi * x;
-  r.c_xz = z - r.kbyi * x;
-  r.c_yx = x - r.ibyj * y;
-  r.c_yz = z - r.kbyj * y;
-  r.c_zx = x - r.ibyk * z;
-  r.c_zy = y - r.jbyk * z;
+  r.cxy = y - r.jbyi * x;
+  r.cxz = z - r.kbyi * x;
+  r.cyx = x - r.ibyj * y;
+  r.cyz = z - r.kbyj * y;
+  r.czx = x - r.ibyk * z;
+  r.czy = y - r.jbyk * z;
 
   r.classification = classify(i, j, k);
   return r;
