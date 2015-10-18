@@ -46,7 +46,12 @@ fill(model, function(x, y, z) {
 
   if (x%2 && y%2 && z%2) {
     // poor mans compression
-    depthSorted[depthPos] = [x, y, z, depthPos];
+    depthSorted[depthPos] = [
+      -modelHalfWidth + x,
+      -modelHalfWidth + y,
+      -modelHalfWidth + z,
+      depthPos
+    ];
     return 255;
   }
 
@@ -162,8 +167,8 @@ var ctx = fc(function() {
           continue;
         }
         var d = ray.intersects([
-          [-modelHalfWidth + o[0] - 0.5, -modelHalfWidth + o[1] - 0.5, -modelHalfWidth + o[2] - 0.5],
-          [-modelHalfWidth + o[0] + 0.5, -modelHalfWidth + o[1] + 0.5, -modelHalfWidth + o[2] + 0.5]
+          [o[0] - 0.5, o[1] - 0.5, o[2] - 0.5],
+          [o[0] + 0.5, o[1] + 0.5, o[2] + 0.5]
         ], normal)
         if (d !== false) {
           v3normalize(tnormal, normal)
