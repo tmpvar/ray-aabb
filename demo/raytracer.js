@@ -45,11 +45,17 @@ var depthPos = 0;
 fill(model, function(x, y, z) {
 
   if (x%2 && y%2 && z%2) {
+
+
     // poor mans compression
-    depthSorted[depthPos] = [
-      -modelHalfWidth + x,
-      -modelHalfWidth + y,
-      -modelHalfWidth + z,
+    x = -modelHalfWidth + x;
+    y = -modelHalfWidth + y;
+    z = -modelHalfWidth + z;
+
+    depthSorted[depthPos] = [[
+      [x - 0.5, y - 0.5, z - 0.5],
+      [x + 0.5, y + 0.5, z + 0.5]
+      ],
       depthPos
     ];
     return 255;
@@ -102,7 +108,7 @@ window.addEventListener('mousewheel', function(ev) {
 var viewport = [0, 0, 0, 0];
 var near = [0, 0, 0];
 
-var ctx = fc(function() {
+var ctx = fc(function render() {
   ctx.clear();
   var w = viewport[2] = ctx.canvas.width;
   var h = viewport[3] = ctx.canvas.height;
@@ -128,7 +134,7 @@ var ctx = fc(function() {
   getEye(rayOrigin, view);
   var normal = [0, 0, 0];
 
-  depthSorted.sort(function(a, b) {
+  depthSorted.sort(function depthSort(a, b) {
     var da = v3distSquared(a, rayOrigin);
     var db = v3distSquared(b, rayOrigin);
     return da-db;
@@ -166,10 +172,7 @@ var ctx = fc(function() {
         if (!o) {
           continue;
         }
-        var d = ray.intersects([
-          [o[0] - 0.5, o[1] - 0.5, o[2] - 0.5],
-          [o[0] + 0.5, o[1] + 0.5, o[2] + 0.5]
-        ], normal)
+        var d = ray.intersects(o[0], normal)
         if (d !== false) {
           v3normalize(tnormal, normal)
           buffer[c+0] = 127 + tnormal[0]*255;
