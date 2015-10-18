@@ -39,6 +39,10 @@ var isect = [0, 0, 0];
 var ray = createRay(rayOrigin, rayDirection);
 var modelWidth = 8
 var modelHalfWidth = modelWidth/2;
+var modelBounds = [
+  [-modelHalfWidth, -modelHalfWidth, -modelHalfWidth],
+  [modelHalfWidth, modelHalfWidth, modelHalfWidth]
+];
 var model = ndarray(new Uint8Array(modelWidth*modelWidth*modelWidth), [modelWidth, modelWidth, modelWidth]);
 var depthSorted = new Array(modelWidth*modelWidth*modelWidth);
 var depthPos = 0;
@@ -52,12 +56,17 @@ fill(model, function(x, y, z) {
     y = -modelHalfWidth + y;
     z = -modelHalfWidth + z;
 
-    depthSorted[depthPos] = [[
+    var bounds = [
       [x - 0.5, y - 0.5, z - 0.5],
       [x + 0.5, y + 0.5, z + 0.5]
-      ],
-      depthPos
     ];
+
+    var center = [
+      (bounds[0][0] + bounds[1][0]) / 2,
+      (bounds[0][1] + bounds[1][1]) / 2,
+      (bounds[0][2] + bounds[1][2]) / 2
+    ];
+    depthSorted[depthPos] = [bounds, center, depthPos];
     return 255;
   }
 
@@ -135,8 +144,8 @@ var ctx = fc(function render() {
   var normal = [0, 0, 0];
 
   depthSorted.sort(function depthSort(a, b) {
-    var da = v3distSquared(a, rayOrigin);
-    var db = v3distSquared(b, rayOrigin);
+    var da = v3distSquared(a[1], rayOrigin);
+    var db = v3distSquared(b[1], rayOrigin);
     return da-db;
   })
 
@@ -162,7 +171,7 @@ var ctx = fc(function render() {
       buffer[c+2] = 0x22;
       buffer[c+3] = 0xff;
 
-      if (!ray.intersects([[-modelHalfWidth, -modelHalfWidth, -modelHalfWidth],[modelHalfWidth, modelHalfWidth, modelHalfWidth]])) {
+      if (!ray.intersects(modelBounds)) {
         continue;
       }
 
@@ -182,44 +191,6 @@ var ctx = fc(function render() {
           break;
         }
       }
-
-      // var found = Infinity;
-      // for (var nx=-modelHalfWidth; nx<modelHalfWidth; nx++) {
-      //   for (var ny=-modelHalfWidth; ny<modelHalfWidth; ny++) {
-      //     for (var nz=-modelHalfWidth; nz<modelHalfWidth; nz++) {
-      //       if (model.get(nx+modelHalfWidth, ny+modelHalfWidth, nz+modelHalfWidth)) {
-      //         var d = ray.intersects([
-      //           [nx - 0.5, ny - 0.5, nz - 0.5],
-      //           [nx + 0.5, ny + 0.5, nz + 0.5]
-      //         ], normal)
-
-      //         if (d !== false && d < found) {
-      //           found = d;
-      //           v3normalize(tnormal, normal)
-
-      //           // TODO: consider bouncing the ray for lighting
-      //           // v3add(
-      //           //   isect,
-      //           //   v3scale(isect, rayDirection, d),
-      //           //   rayOrigin
-      //           // );
-
-      //           buffer[c+0] = 127 + tnormal[0]*255;
-      //           buffer[c+1] = 127 + tnormal[1]*255;
-      //           buffer[c+2] = 127 + tnormal[2]*255;
-      //           buffer[c+3] = 255
-      //         } else {
-      //           // TODO: find the closest intersection
-      //           // buffer[c+0] = 0x11;
-      //           // buffer[c+1] = 0x11;
-      //           // buffer[c+2] = 0x22;
-      //           // buffer[c+3] = 0xff;
-      //         }
-
-      //       }
-      //     }
-      //   }
-      // }
     }
   }
 
