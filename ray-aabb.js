@@ -636,6 +636,8 @@ Ray.prototype.c_zy = 0.0;
 Ray.prototype.classification = 0.0;
 Ray.prototype.result = null;
 
+var scratchNormal = [0, 0, 0];
+
 Ray.prototype.intersects =  function rayIntersectsAABB(aabb, computeDistance) {
   var classification = this.classification;
   var t = tests[classification];
@@ -645,7 +647,8 @@ Ray.prototype.intersects =  function rayIntersectsAABB(aabb, computeDistance) {
     }
 
     var lerp = lerps[classification]
-    return lerp && lerp(this, aabb, computeDistance);
+    var normal = Array.isArray(computeDistance) ? computeDistance : scratchNormal;
+    return lerp && lerp(this, aabb, normal);
   }
   return false;
 };
