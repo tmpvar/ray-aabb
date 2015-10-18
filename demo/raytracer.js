@@ -50,7 +50,6 @@ fill(model, function(x, y, z) {
 
   if (x%2 && y%2 && z%2) {
 
-
     // poor mans compression
     x = -modelHalfWidth + x;
     y = -modelHalfWidth + y;
@@ -105,7 +104,6 @@ window.addEventListener('mousemove', function(ev) {
   }
   mouse[0] = x;
   mouse[1] = y;
-
 });
 
 window.addEventListener('mousewheel', function(ev) {
@@ -139,9 +137,8 @@ var ctx = fc(function render() {
     m4inverted,
     m4mul(m4mvp, projection, view)
   );
-  var step = 1;
+
   getEye(rayOrigin, view);
-  var normal = [0, 0, 0];
 
   depthSorted.sort(function depthSort(a, b) {
     var da = v3distSquared(a[1], rayOrigin);
@@ -149,10 +146,10 @@ var ctx = fc(function render() {
     return da-db;
   })
 
-  for (var y=0; y<h; y+=step) {
+  for (var y=0; y<h; y++) {
     near[1] = y;
 
-    for (var x = 0; x<w; x+=step) {
+    for (var x = 0; x<w; x++) {
       near[0] = x;
 
       unproject(rayDirection, near, viewport, m4inverted)
