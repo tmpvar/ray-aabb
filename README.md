@@ -81,10 +81,10 @@ where `aabb` specifies the corners of the bounding box:
 [[x1, y1, z1], [x2, y2, z2]]
 ```
 
-and the optional `normal` argument is a 2d/3d vec (e.g., `[0, 0]`) that will be populated with the _non-normalized_ normal of the corner/edge/face that the ray intersected with.
-
+and the optional `normal` argument is a 2d/3d vector (e.g., `[0, 0]`) that will be populated with the _non-normalized_ normal of the corner/edge/face that the ray intersected with.
 
 _returns_
+
 if `normal` is not passed
 
  * `true` if intersection detected
@@ -92,7 +92,7 @@ if `normal` is not passed
 
 if `normal` is passed:
 
- * a number denoting how far along the ray the collision occurred. You can use this number to compute the point of intersection. See the demos for example usage.
+ * `false` if no intersection or a number denoting how far along the ray the collision occurred. You can use this number to compute the point of intersection. See the demos for example usage.
 
 ## platforms
 
