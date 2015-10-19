@@ -51,6 +51,6 @@
     "tape": "^3.4.0"
   },
   "dependencies": {
-    "ray-direction-classify": "^1.0.2"
+    "ray-direction-classify": "^1.0.3"
   }
 }
