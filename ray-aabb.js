@@ -296,9 +296,9 @@ lerps[classify.MMM] = function lerpMMM(ray, aabb, norm) {
   var b = (ub[1] - ro[1]) * ray.ij;
   var c = (ub[2] - ro[2]) * ray.ik;
 
-  norm[0] = +(a >= b && a >= c);
-  norm[1] = +(b >= c && b >= a);
-  norm[2] = +(c >= a && c >= b);
+  norm[0] = (a >= b && a >= c) ? 1 : 0;
+  norm[1] = (b >= c && b >= a) ? 1 : 0;
+  norm[2] = (c >= a && c >= b) ? 1 : 0;
 
   return max(a, b, c);
 };
@@ -312,9 +312,9 @@ lerps[classify.MMP] = function lerpMMP(ray, aabb, norm) {
   var b = (ub[1] - ro[1]) * ray.ij;
   var c = (lb[2] - ro[2]) * ray.ik;
 
-  norm[0] = +(a >= b && a >= c);
-  norm[1] = +(b >= c && b >= a);
-  norm[2] = -(c >= a && c >= b);
+  norm[0] = (a >= b && a >= c) ?  1 : 0;
+  norm[1] = (b >= c && b >= a) ?  1 : 0;
+  norm[2] = (c >= a && c >= b) ? -1 : 0;
 
   return max(a, b, c);
 };
@@ -328,9 +328,9 @@ lerps[classify.MPM] = function lerpMPM(ray, aabb, norm) {
   var b = (lb[1] - ro[1]) * ray.ij;
   var c = (ub[2] - ro[2]) * ray.ik;
 
-  norm[0] = +(a >= b && a >= c);
-  norm[1] = -(b >= c && b >= a);
-  norm[2] = +(c >= a && c >= b);
+  norm[0] = (a >= b && a >= c) ?  1 : 0;
+  norm[1] = (b >= c && b >= a) ? -1 : 0;
+  norm[2] = (c >= a && c >= b) ?  1 : 0;
 
   return max(a, b, c);
 };
@@ -344,9 +344,9 @@ lerps[classify.MPP] = function lerpMPP(ray, aabb, norm) {
   var b = (lb[1] - ro[1]) * ray.ij;
   var c = (lb[2] - ro[2]) * ray.ik;
 
-  norm[0] = +(a >= b && a >= c);
-  norm[1] = -(b >= c && b >= a);
-  norm[2] = -(c >= a && c >= b);
+  norm[0] = (a >= b && a >= c) ?  1 : 0;
+  norm[1] = (b >= c && b >= a) ? -1 : 0;
+  norm[2] = (c >= a && c >= b) ? -1 : 0;
 
   return max(a, b, c);
 };
@@ -360,9 +360,9 @@ lerps[classify.PMM] = function lerpPMM(ray, aabb, norm) {
   var b = (ub[1] - ro[1]) * ray.ij;
   var c = (ub[2] - ro[2]) * ray.ik;
 
-  norm[0] = -(a >= b && a >= c);
-  norm[1] = +(b >= c && b >= a);
-  norm[2] = +(c >= a && c >= b);
+  norm[0] = (a >= b && a >= c) ? -1 : 0;
+  norm[1] = (b >= c && b >= a) ?  1 : 0;
+  norm[2] = (c >= a && c >= b) ?  1 : 0;
 
   return max(a, b, c);
 };
@@ -376,9 +376,9 @@ lerps[classify.PMP] = function lerpPMP(ray, aabb, norm) {
   var b = (ub[1] - ro[1]) * ray.ij;
   var c = (lb[2] - ro[2]) * ray.ik;
 
-  norm[0] = -(a >= b && a >= c);
-  norm[1] = +(b >= c && b >= a);
-  norm[2] = -(c >= a && c >= b);
+  norm[0] = (a >= b && a >= c) ? -1 : 0;
+  norm[1] = (b >= c && b >= a) ?  1 : 0;
+  norm[2] = (c >= a && c >= b) ? -1 : 0;
 
   return max(a, b, c);
 };
@@ -392,9 +392,9 @@ lerps[classify.PPM] = function lerpPPM(ray, aabb, norm) {
   var b = (lb[1] - ro[1]) * ray.ij;
   var c = (ub[2] - ro[2]) * ray.ik;
 
-  norm[0] = -(a >= b && a >= c);
-  norm[1] = -(b >= c && b >= a);
-  norm[2] = +(c >= a && c >= b);
+  norm[0] = (a >= b && a >= c) ? -1 : 0;
+  norm[1] = (b >= c && b >= a) ? -1 : 0;
+  norm[2] = (c >= a && c >= b) ?  1 : 0;
 
   return max(a, b, c);
 };
@@ -407,9 +407,9 @@ lerps[classify.PPP] = function lerpPPP(ray, aabb, norm) {
   var b = (lb[1] - ro[1]) * ray.ij;
   var c = (lb[2] - ro[2]) * ray.ik;
 
-  norm[0] = -(a >= b && a >= c);
-  norm[1] = -(b >= c && b >= a);
-  norm[2] = -(c >= a && c >= b);
+  norm[0] = (a >= b && a >= c) ? -1 : 0;
+  norm[1] = (b >= c && b >= a) ? -1 : 0;
+  norm[2] = (c >= a && c >= b) ? -1 : 0;
 
   return max(a, b, c);
 };
@@ -422,8 +422,8 @@ lerps[classify.OMM] = function lerpOMM(ray, aabb, norm) {
   var b = (ub[2] - ro[2]) * ray.ik;
 
   norm[0] = 0
-  norm[1] = +(a >= b);
-  norm[2] = +(b >= a);
+  norm[1] = (a >= b) ? 1 : 0;
+  norm[2] = (b >= a) ? 1 : 0;
 
   return max(a, b);
 };
@@ -435,8 +435,8 @@ lerps[classify.OMP] = function lerpOMP(ray, aabb, norm) {
   var b = (aabb[0][2] - ro[2]) * ray.ik;
 
   norm[0] = 0
-  norm[1] = +(a >= b);
-  norm[2] = -(b >= a);
+  norm[1] = (a >= b) ?  1 : 0;
+  norm[2] = (b >= a) ? -1 : 0;
 
   return max(a, b);
 };
@@ -448,8 +448,8 @@ lerps[classify.OPM] = function lerpOPM(ray, aabb, norm) {
   var b = (aabb[1][2] - ro[2]) * ray.ik;
 
   norm[0] = 0
-  norm[1] = -(a >= b);
-  norm[2] = +(b >= a);
+  norm[1] = (a >= b) ? -1 : 0;
+  norm[2] = (b >= a) ?  1 : 0;
 
   return max(a, b);
 };
@@ -462,8 +462,8 @@ lerps[classify.OPP] = function lerpOPP(ray, aabb, norm) {
   var b = (lb[2] - ro[2]) * ray.ik;
 
   norm[0] = 0
-  norm[1] = -(a >= b);
-  norm[2] = -(b >= a);
+  norm[1] = (a >= b) ? -1 : 0;
+  norm[2] = (b >= a) ? -1 : 0;
 
   return max(a, b);
 }
@@ -475,9 +475,9 @@ lerps[classify.MOM] = function lerpMOM(ray, aabb, norm) {
   var a = (ub[0] - ro[0]) * ray.ii;
   var b = (ub[2] - ro[2]) * ray.ik;
 
-  norm[0] = +(a >= b);
+  norm[0] = (a >= b) ? 1 : 0;
   norm[1] = 0
-  norm[2] = +(b >= a);
+  norm[2] = (b >= a) ? 1 : 0;
 
   return max(a, b);
 };
@@ -488,9 +488,9 @@ lerps[classify.MOP] = function lerpMOP(ray, aabb, norm) {
   var a = (aabb[1][0] - ro[0]) * ray.ii;
   var b = (aabb[0][2] - ro[2]) * ray.ik;
 
-  norm[0] = +(a >= b);
+  norm[0] = (a >= b) ?  1 : 0;
   norm[1] = 0
-  norm[2] = -(b >= a);
+  norm[2] = (b >= a) ? -1 : 0;
 
   return max(a, b);
 };
@@ -501,9 +501,9 @@ lerps[classify.POM] = function lerpPOM(ray, aabb, norm) {
   var a = (aabb[0][0] - ray.ro[0]) * ray.ii;
   var b = (aabb[1][2] - ray.ro[2]) * ray.ik;
 
-  norm[0] = -(a >= b);
+  norm[0] = (a >= b) ? -1 : 0;
   norm[1] = 0;
-  norm[2] = +(b >= a);
+  norm[2] = (b >= a) ?  1 : 0;
 
   return max(a, b);
 };
@@ -515,9 +515,9 @@ lerps[classify.POP] = function lerpPOP(ray, aabb, norm) {
   var a = (lb[0] - ro[0]) * ray.ii;
   var b = (lb[2] - ro[2]) * ray.ik;
 
-  norm[0] = -(a >= b);
+  norm[0] = (a >= b) ? -1 : 0;
   norm[1] = 0
-  norm[2] = -(b >= a);
+  norm[2] = (b >= a) ? -1 : 0;
 
   return max(a, b);
 }
@@ -529,8 +529,8 @@ lerps[classify.MMO] = function lerpMMO(ray, aabb, norm) {
   var a = (ub[0] - ro[0]) * ray.ii;
   var b = (ub[1] - ro[1]) * ray.ij;
 
-  norm[0] = +(a >= b);
-  norm[1] = +(b >= a);
+  norm[0] = (a >= b) ? 1 : 0;
+  norm[1] = (b >= a) ? 1 : 0;
   norm[2] = 0
 
   return max(a, b);
@@ -542,8 +542,8 @@ lerps[classify.MPO] = function lerpMPO(ray, aabb, norm) {
   var a = (aabb[1][0] - ro[0]) * ray.ii;
   var b = (aabb[0][1] - ro[1]) * ray.ij;
 
-  norm[0] = +(a >= b);
-  norm[1] = -(b >= a);
+  norm[0] = (a >= b) ?  1 : 0;
+  norm[1] = (b >= a) ? -1 : 0;
   norm[2] = 0
 
   return max(a, b);
@@ -555,8 +555,8 @@ lerps[classify.PMO] = function lerpPMO(ray, aabb, norm) {
   var a = (aabb[0][0] - ro[0]) * ray.ii;
   var b = (aabb[1][1] - ro[1]) * ray.ij;
 
-  norm[0] = -(a >= b);
-  norm[1] = +(b >= a);
+  norm[0] = (a >= b) ? -1 : 0;
+  norm[1] = (b >= a) ?  1 : 0;
   norm[2] = 0
 
   return max(a, b);
@@ -569,8 +569,8 @@ lerps[classify.PPO] = function lerpPPO(ray, aabb, norm) {
   var a = (lb[0] - ro[0]) * ray.ii;
   var b = (lb[1] - ro[1]) * ray.ij;
 
-  norm[0] = -(a >= b);
-  norm[1] = -(b >= a);
+  norm[0] = (a >= b) ? -1 : 0;
+  norm[1] = (b >= a) ? -1 : 0;
   norm[2] = 0;
 
   return max(a, b);
