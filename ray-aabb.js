@@ -662,22 +662,22 @@ Ray.prototype.update = function updateRay(ro, rd) {
   var i = rd[0], j = rd[1], k = rd[2];
   var x = ro[0], y = ro[1], z = ro[2];
 
-  r.ii = (i)?1.0/i:0;
-  r.ij = (j)?1.0/j:0;
-  r.ik = (k)?1.0/k:0;
+  var ii = r.ii = (i)?1.0/i:0;
+  var ij = r.ij = (j)?1.0/j:0;
+  var ik = r.ik = (k)?1.0/k:0;
   //ray slope
-  r.ibyj = i * r.ij;
-  r.jbyi = j * r.ii;
-  r.jbyk = j * r.ik;
-  r.kbyj = k * r.ij;
-  r.ibyk = i * r.ik;
-  r.kbyi = k * r.ii;
-  r.cxy = y - r.jbyi * x;
-  r.cxz = z - r.kbyi * x;
-  r.cyx = x - r.ibyj * y;
-  r.cyz = z - r.kbyj * y;
-  r.czx = x - r.ibyk * z;
-  r.czy = y - r.jbyk * z;
+  var ibyj = r.ibyj = i * ij;
+  var jbyi = r.jbyi = j * ii;
+  var jbyk = r.jbyk = j * ik;
+  var kbyj = r.kbyj = k * ij;
+  var ibyk = r.ibyk = i * ik;
+  var kbyi = r.kbyi = k * ii;
+  r.cxy = y - jbyi * x;
+  r.cxz = z - kbyi * x;
+  r.cyx = x - ibyj * y;
+  r.cyz = z - kbyj * y;
+  r.czx = x - ibyk * z;
+  r.czy = y - jbyk * z;
 
   r.classification = classify(i, j, k);
   return r;
