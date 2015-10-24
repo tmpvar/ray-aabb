@@ -657,10 +657,24 @@ Ray.prototype.intersects =  function rayIntersectsAABB(aabb, computeDistance) {
 
 Ray.prototype.update = function updateRay(ro, rd) {
   var r = this;
-  r.ro = ro;
-  r.rd = rd;
   var i = rd[0], j = rd[1], k = rd[2];
   var x = ro[0], y = ro[1], z = ro[2];
+
+  var tro = r.ro;
+  var trd = r.rd;
+
+  if (i === trd[0] && j === trd[1] && k === trd[2] &&
+      x === tro[0] && y === tro[1] && z === tro[2])
+  {
+    return r;
+  }
+
+  r.ro[0] = x;
+  r.ro[1] = y;
+  r.ro[2] = z;
+  r.rd[0] = i;
+  r.rd[1] = j;
+  r.rd[2] = k;
 
   var ii = r.ii = (i === 0)?0:1.0/i;
   var ij = r.ij = (j === 0)?0:1.0/j;
