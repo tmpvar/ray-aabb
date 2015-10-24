@@ -662,9 +662,9 @@ Ray.prototype.update = function updateRay(ro, rd) {
   var i = rd[0], j = rd[1], k = rd[2];
   var x = ro[0], y = ro[1], z = ro[2];
 
-  var ii = r.ii = (i === 0)?1.0/i:0;
-  var ij = r.ij = (j === 0)?1.0/j:0;
-  var ik = r.ik = (k === 0)?1.0/k:0;
+  var ii = r.ii = (i === 0)?0:1.0/i;
+  var ij = r.ij = (j === 0)?0:1.0/j;
+  var ik = r.ik = (k === 0)?0:1.0/k;
   //ray slope
   var ibyj = r.ibyj = i * ij;
   var jbyi = r.jbyi = j * ii;
